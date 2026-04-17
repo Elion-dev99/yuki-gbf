@@ -14,3 +14,48 @@
 
 </body>
 </html>
+<!-- 右上メニューボタン -->
+<div class="menu-btn" onclick="toggleMenu()">
+  ☰
+</div>
+
+<!-- 右側スライドメニュー（文字なし） -->
+<nav class="side-menu" id="sideMenu">
+  <div class="menu-item" onclick="changePage('home')"></div>
+  <div class="menu-item" onclick="changePage('weapons')"></div>
+  <div class="menu-item" onclick="changePage('summons')"></div>
+  <div class="menu-item" onclick="changePage('status')"></div>
+</nav>
+
+<!-- SPA のメイン表示領域 -->
+<div id="content"></div>
+
+<script>
+function toggleMenu() {
+  document.getElementById("sideMenu").classList.toggle("open");
+}
+
+// SPA：画面切り替え
+function changePage(page) {
+  const content = document.getElementById("content");
+
+  if (page === "home") {
+    content.innerHTML = `<h1 style="color:white;">ホーム</h1>`;
+  }
+
+  if (page === "weapons") {
+    content.innerHTML = `<h1 style="color:white;">武器編成</h1>`;
+  }
+
+  if (page === "summons") {
+    content.innerHTML = `<h1 style="color:white;">召喚石</h1>`;
+  }
+
+  if (page === "status") {
+    content.innerHTML = `<h1 style="color:white;">ステータス</h1>`;
+  }
+
+  // メニューを閉じる
+  toggleMenu();
+}
+</script>
