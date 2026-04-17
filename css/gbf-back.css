@@ -1,4 +1,12 @@
-/* 右上ハンバーガーボタン */
+/* ===== 背景画像（あなたの構造に完全対応） ===== */
+body {
+  margin: 0;
+  background: url("./img/gbf-back.jpg") no-repeat center center fixed;
+  background-size: cover;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* ===== 右上ハンバーガーボタン ===== */
 .menu-btn {
   position: fixed;
   top: 15px;
@@ -10,14 +18,14 @@
   user-select: none;
 }
 
-/* スライドメニュー本体（右側） */
+/* ===== 右側スライドメニュー本体 ===== */
 .side-menu {
   position: fixed;
   top: 0;
   right: -260px; /* 初期位置：画面外 */
   width: 240px;
   height: 100%;
-  background: url("../img/menu-back.jpg") no-repeat center center;
+  background: url("./img/menu-back.jpg") no-repeat center center;
   background-size: cover;
   backdrop-filter: blur(4px);
   transition: right 0.3s ease;
@@ -32,15 +40,15 @@
   right: 0;
 }
 
-/* メニュー内のクリック領域（文字なし） */
+/* ===== メニュー内のクリック領域（文字なし） ===== */
 .menu-item {
   height: 60px;
   width: 100%;
   cursor: pointer;
 }
 
-/* SPA のメイン表示領域 */
+/* ===== SPA のメイン表示領域 ===== */
 #content {
   padding: 80px 20px;
-  color: white; /* 画面切り替え後の文字が背景で見えなくなるのを防ぐ */
+  color: white; /* 背景に埋もれないように */
 }
