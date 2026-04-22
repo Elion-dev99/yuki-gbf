@@ -19,7 +19,7 @@ body {
 .side-menu {
   position: fixed;
   top: 0;
-  left: -240px;
+  light: -240px;
   width: 240px;
   height: 100%;
   background: rgba(0,0,0,0.85);
@@ -30,7 +30,7 @@ body {
 }
 
 .side-menu.open {
-  left: 0;
+  light: 0;
 }
 
 .side-menu ul {
