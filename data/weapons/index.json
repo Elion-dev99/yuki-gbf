@@ -1,5 +1,17 @@
 [
+  "dark/dagger/0001.json",
+  "dark/sword/0001.json",
+  "dark/sword/0002.json",
   "earth/gun/0001.json",
+  "earth/gun/0002.json",
+  "earth/gun/0003.json",
+  "fire/axe/0001.json",
   "fire/sword/0001.json",
-  "water/spear/0001.json"
+  "fire/sword/0002.json",
+  "fire/sword/0003.json",
+  "light/sword/0001.json",
+  "water/spear/0001.json",
+  "water/spear/0002.json",
+  "water/sword/0001.json",
+  "wind/sword/0001.json"
 ]
