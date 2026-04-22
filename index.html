@@ -1,53 +1,29 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GBF Tools - Weapon List</title>
-
-  <!-- スタイル -->
-  <link rel="stylesheet" href="css/weapons.css" />
-
-  <style>
-    body {
-      margin: 0;
-      background: #111;
-      color: #fff;
-      font-family: "Segoe UI", sans-serif;
-    }
-
-    header {
-      background: #1a1a1a;
-      padding: 12px;
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-      border-bottom: 1px solid #333;
-    }
-
-    .loading {
-      text-align: center;
-      padding: 20px;
-      opacity: 0.7;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>GBF Weapons</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-  <header>GBF Weapon Database</header>
 
-  <div id="weapon-list">
-    <div class="loading">読み込み中...</div>
-  </div>
-<script src="js/loadweapons.js"></script>
-<script src="js/renderweapons.js"></script>
+  <!-- ここが超重要：JS が書き込む場所 -->
+  <div id="weapon-list">読み込み中...</div>
 
-<script>
-  window.addEventListener("DOMContentLoaded", () => {
-    loadweapons().then(list => {
-      renderweapons(list);
+  <!-- JS 読み込み（順番厳守） -->
+  <script src="js/loadweapons.js"></script>
+  <script src="js/renderweapons.js"></script>
+
+  <!-- 実行部分 -->
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      loadweapons().then(list => {
+        renderweapons(list);
+      });
     });
-  });
-</script>
+  </script>
 
+</body>
 </html>
