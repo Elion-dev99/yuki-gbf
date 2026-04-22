@@ -1,35 +1,41 @@
+/* ======== 基本 ======== */
 body {
-  margin: 0;
-  background: #0a0a0a;
-  color: #d0d0d0;
+  background: #0a0f1a; /* 黒青背景 */
+  color: #e6f7ff;      /* 白に近い薄青 */
   font-family: "Meiryo", sans-serif;
 }
 
-/* メニューボタン */
+/* ======== メニューボタン（右上） ======== */
 .menu-btn {
   position: fixed;
   top: 10px;
-  right: 10px;   /* ← 右上に固定 */
-  left: auto;    /* ← 左側指定を無効化 */
-  font-size: 28px;
-  color: #66ccff;
+  right: 10px;
+  left: auto;
+  font-size: 26px;
+  color: #9be2ff;
   cursor: pointer;
   z-index: 1000;
-  padding: 6px 10px;
-  border: 1px solid #66ccff;
-  border-radius: 4px;
-  background: rgba(0,0,0,0.4);
+  padding: 6px 12px;
+  border: 1px solid #7ed6ff;
+  border-radius: 6px;
+  background: rgba(20, 30, 50, 0.6);
+  box-shadow: 0 0 8px rgba(126, 214, 255, 0.4);
 }
 
-/*　メニュー本体　*/
+.menu-btn:hover {
+  background: rgba(40, 60, 90, 0.7);
+  box-shadow: 0 0 12px rgba(155, 226, 255, 0.8);
+}
+
+/* ======== サイドメニュー（右側スライド） ======== */
 .side-menu {
   position: fixed;
   top: 0;
-  right: -240px;
-  width: 240px;
+  right: -260px;
+  width: 260px;
   height: 100%;
-  background: rgba(0,0,0,0.85);
-  border-right: 2px solid #66ccff;
+  background: rgba(10, 15, 25, 0.95);
+  border-left: 2px solid #7ed6ff;
   transition: 0.3s;
   padding-top: 60px;
   z-index: 999;
@@ -39,35 +45,31 @@ body {
   right: 0;
 }
 
+/* ======== メニュー項目 ======== */
 .side-menu ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .side-menu li {
   padding: 15px 20px;
-  border-bottom: 1px solid #333;
-  color: #66ccff;
+  border-bottom: 1px solid rgba(126, 214, 255, 0.2);
+  color: #cce9ff;
   cursor: pointer;
+  font-size: 16px;
 }
 
 .side-menu li:hover {
-  background: rgba(102,204,255,0.1);
+  background: rgba(126, 214, 255, 0.15);
+  color: #ffffff;
 }
 
-/* コンテンツ */
-#app {
-  padding: 20px;
-}
-
+/* ======== タイトル ======== */
 .title {
   font-size: 28px;
-  color: #66ccff;
-  border-bottom: 2px solid #66ccff;
+  color: #9be2ff;
+  border-bottom: 2px solid #7ed6ff;
   padding-bottom: 10px;
-}
-
-.subtitle {
-  color: #aaa;
-  margin-top: 10px;
+  margin-bottom: 20px;
 }
