@@ -5,7 +5,7 @@ body {
   font-family: "Meiryo", sans-serif;
 }
 
-/* メニュー */
+/* メニューボタン */
 .menu-btn {
   position: fixed;
   top: 10px;
@@ -21,10 +21,11 @@ body {
   background: rgba(0,0,0,0.4);
 }
 
+/*　メニュー本体　*/
 .side-menu {
   position: fixed;
   top: 0;
-  light: -240px;
+  right: -240px;
   width: 240px;
   height: 100%;
   background: rgba(0,0,0,0.85);
@@ -35,7 +36,7 @@ body {
 }
 
 .side-menu.open {
-  light: 0;
+  right: 0;
 }
 
 .side-menu ul {
