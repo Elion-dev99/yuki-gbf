@@ -39,26 +39,15 @@
   <div id="weapon-list">
     <div class="loading">読み込み中...</div>
   </div>
+<script src="js/loadweapons.js"></script>
+<script src="js/renderweapons.js"></script>
 
-  <!-- JS 読み込み -->
-  <script src="js/loadweapons.js"></script>
-  <script src="js/renderweapons.js"></script>
-
-  <script>
-    // 武器データを読み込んで表示
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
     loadweapons().then(list => {
       renderweapons(list);
     });
-  </script>
-</body>
-  <script>
-  window.onerror = function(msg, url, line, col, error) {
-    document.body.innerHTML += `
-      <div style="background:#300;padding:10px;margin:10px;border:1px solid #f00;">
-        <b>JS Error:</b><br>
-        ${msg}<br>
-        ${url}:${line}
-      </div>`;
-  };
+  });
 </script>
+
 </html>
