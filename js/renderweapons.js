@@ -1,4 +1,4 @@
-function renderWeapons(list) {
+function renderweapons(list) {
   const container = document.getElementById("weapon-list");
   container.innerHTML = "";
 
