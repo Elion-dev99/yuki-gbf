@@ -1,4 +1,4 @@
-async function loadWeapons() {
+async function loadweapons() {
   // index.json を読み込む
   const index = await fetch("data/weapons/index.json").then(r => r.json());
   const weapons = [];
