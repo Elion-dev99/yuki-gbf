@@ -1,6 +1,7 @@
 /* ======== 基本 ======== */
 body {
-  background: #0a0f1a; /* 黒青背景 */
+  background: url("../img/gbf-back.jpg") no-repeat center center fixed;
+  background-size: cover;
   color: #e6f7ff;      /* 白に近い薄青 */
   font-family: "Meiryo", sans-serif;
 }
