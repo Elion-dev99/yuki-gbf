@@ -9,7 +9,7 @@ body {
 .menu-btn {
   position: fixed;
   top: 10px;
-  left: 10px;
+  light: 10px;
   font-size: 28px;
   color: #66ccff;
   cursor: pointer;
