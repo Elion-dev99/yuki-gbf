@@ -1,0 +1,31 @@
+{
+  "id": "0001",
+  "name": "ガリレオ・サイト",
+  "element": "water",
+  "weapon_type": "spear",
+  "rarity": "ssr",
+  "series": "リミテッド",
+  "obtain": "ガチャ",
+  "stats": {
+    "max_level": 150,
+    "min_hp": 28,
+    "min_atk": 410,
+    "max_hp": 2900,
+    "max_atk": 3300
+  },
+  "ougi": {
+    "name": "蒼海の槍撃"
+  },
+  "skills": [
+    {
+      "name": "霧氷の攻刃"
+    },
+    {
+      "name": ""
+    },
+    {
+      "name": ""
+    }
+  ],
+  "related": ""
+}

@@ -14,11 +14,13 @@ function renderweapons(list) {
     // convert.js の JSON 構造に合わせる
     const atk = w.stats?.max_atk ?? "";
     const hp = w.stats?.max_hp ?? "";
+    const related = w.related ? `関連: ${w.related}` : "";
 
     card.innerHTML = `
       <div class="weapon-name">${name}</div>
       <div class="weapon-info">${element} / ${type} / ${rarity}</div>
       <div class="weapon-stats">ATK: ${atk} / HP: ${hp}</div>
+      ${related ? `<div class="weapon-related">${related}</div>` : ""}
     `;
 
     container.appendChild(card);

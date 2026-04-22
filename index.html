@@ -5,6 +5,7 @@
   <title>GBF Weapons</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/weapons.css">
+  <!-- 注意: ローカルファイルとして開くとfetchが動作しないため、HTTPサーバーでホストしてください -->
 </head>
 
 <body>
@@ -18,6 +19,10 @@
     window.addEventListener("DOMContentLoaded", () => {
       loadweapons().then(list => {
         renderweapons(list);
+      }).catch(error => {
+        const container = document.getElementById("weapon-list");
+        container.innerHTML = "エラーが発生しました。コンソールを確認してください。";
+        console.error("Failed to load weapons:", error);
       });
     });
   </script>
