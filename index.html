@@ -4,19 +4,18 @@
   <meta charset="UTF-8">
   <title>GBF Weapons</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ここを修正 -->
   <link rel="stylesheet" href="css/weapons.css">
 </head>
 
 <body>
 
-  <!-- ここが超重要：JS が書き込む場所 -->
   <div id="weapon-list">読み込み中...</div>
 
-  <!-- JS 読み込み（順番厳守） -->
   <script src="js/loadweapons.js"></script>
   <script src="js/renderweapons.js"></script>
 
-  <!-- 実行部分 -->
   <script>
     window.addEventListener("DOMContentLoaded", () => {
       loadweapons().then(list => {
