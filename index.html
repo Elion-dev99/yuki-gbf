@@ -1,7 +1,54 @@
-<div id="weapon-list"></div>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GBF Tools - Weapon List</title>
 
-<script src="js/loadWeapons.js"></script>
-<script src="js/renderWeapons.js"></script>
-<script>
-  loadWeapons().then(renderWeapons);
-</script>
+  <!-- スタイル -->
+  <link rel="stylesheet" href="css/weapons.css" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    header {
+      background: #1a1a1a;
+      padding: 12px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      border-bottom: 1px solid #333;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 20px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+
+<body>
+  <header>GBF Weapon Database</header>
+
+  <div id="weapon-list">
+    <div class="loading">読み込み中...</div>
+  </div>
+
+  <!-- JS 読み込み -->
+  <script src="js/loadWeapons.js"></script>
+  <script src="js/renderWeapons.js"></script>
+
+  <script>
+    // 武器データを読み込んで表示
+    loadWeapons().then(list => {
+      renderWeapons(list);
+    });
+  </script>
+</body>
+</html>
