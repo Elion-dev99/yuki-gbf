@@ -1,0 +1,36 @@
+name: Init Folder Structure
+
+on:
+  workflow_dispatch:
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Create folder structure
+        run: |
+          # characters
+          mkdir -p docs/data/characters/{fire,water,earth,wind,light,dark}
+
+          # weapons (属性 × 武器種)
+          for element in fire water earth wind light dark; do
+            mkdir -p docs/data/weapons/$element/{sword,dagger,spear,axe,staff,gun,combat,bow,harp,katana}
+          done
+
+          # job (Class)
+          mkdir -p docs/data/job/{Class_I,Class_II,Class_III,Class_IV,Class_V,Ex_I,Ex_II}
+
+          # .keep を全フォルダに配置（空フォルダをGitに残すため）
+          find docs/data -type d -exec touch {}/.keep \;
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Initialize folder structure" || echo "No changes to commit"
+          git push
