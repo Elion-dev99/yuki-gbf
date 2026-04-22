@@ -1,0 +1,30 @@
+#weapon-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+
+.weapon-card {
+  background: #222;
+  color: #fff;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.weapon-name {
+  font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 15px;
+}
+
+.weapon-info {
+  opacity: 0.8;
+  margin-bottom: 5px;
+}
+
+.weapon-stats {
+  font-size: 12px;
+  opacity: 0.9;
+}
