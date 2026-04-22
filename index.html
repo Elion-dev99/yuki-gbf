@@ -2,30 +2,34 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>GBF Weapons</title>
+  <title>GBF Tools - FF14 Style SPA</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/weapons.css">
-  <!-- 注意: ローカルファイルとして開くとfetchが動作しないため、HTTPサーバーでホストしてください -->
+  <link rel="stylesheet" href="css/ff14.css">
 </head>
 
 <body>
 
-  <div id="weapon-list">読み込み中...</div>
+  <!-- FF14風ハンバーガーメニュー -->
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+  <!-- FF14風サイドメニュー -->
+  <nav class="side-menu" id="sideMenu">
+    <ul>
+      <li onclick="navigate('home')">ホーム</li>
+      <li onclick="navigate('weapons')">武器一覧</li>
+      <li onclick="navigate('summons')">召喚石</li>
+      <li onclick="navigate('characters')">キャラ</li>
+      <li onclick="navigate('party')">編成ツール</li>
+      <li onclick="navigate('settings')">設定</li>
+    </ul>
+  </nav>
+
+  <!-- SPAコンテンツ領域 -->
+  <main id="app"></main>
 
   <script src="js/loadweapons.js"></script>
   <script src="js/renderweapons.js"></script>
-
-  <script>
-    window.addEventListener("DOMContentLoaded", () => {
-      loadweapons().then(list => {
-        renderweapons(list);
-      }).catch(error => {
-        const container = document.getElementById("weapon-list");
-        container.innerHTML = "エラーが発生しました。コンソールを確認してください。";
-        console.error("Failed to load weapons:", error);
-      });
-    });
-  </script>
+  <script src="js/spa.js"></script>
 
 </body>
 </html>
