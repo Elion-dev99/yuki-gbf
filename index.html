@@ -51,4 +51,14 @@
     });
   </script>
 </body>
+  <script>
+  window.onerror = function(msg, url, line, col, error) {
+    document.body.innerHTML += `
+      <div style="background:#300;padding:10px;margin:10px;border:1px solid #f00;">
+        <b>JS Error:</b><br>
+        ${msg}<br>
+        ${url}:${line}
+      </div>`;
+  };
+</script>
 </html>
