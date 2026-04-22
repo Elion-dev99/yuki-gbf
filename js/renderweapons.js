@@ -3,8 +3,15 @@ function renderweapons(list) {
   container.innerHTML = "";
 
   list.forEach(w => {
-    const div = document.createElement("div");
-    div.textContent = w.name;
-    container.appendChild(div);
+    const card = document.createElement("div");
+    card.className = "weapon-card";
+
+    card.innerHTML = `
+      <div class="weapon-name">${w.name}</div>
+      <div class="weapon-info">${w.element} / ${w.weapon_type} / ${w.rarity}</div>
+      <div class="weapon-stats">ATK: ${w.atk} / HP: ${w.hp}</div>
+    `;
+
+    container.appendChild(card);
   });
 }
