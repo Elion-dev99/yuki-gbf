@@ -117,3 +117,34 @@ lines.forEach((line) => {
     console.log("生成:", outPath);
   }
 });
+
+// ===============================
+// index.json 自動生成
+// ===============================
+function generateIndex() {
+  const base = "data/weapons";
+  const result = [];
+
+  const elements = fs.readdirSync(base);
+  elements.forEach(el => {
+    const elPath = `${base}/${el}`;
+    if (!fs.statSync(elPath).isDirectory()) return;
+
+    const types = fs.readdirSync(elPath);
+    types.forEach(tp => {
+      const tpPath = `${elPath}/${tp}`;
+      if (!fs.statSync(tpPath).isDirectory()) return;
+
+      const files = fs.readdirSync(tpPath).filter(f => f.endsWith(".json"));
+      files.forEach(f => {
+        result.push(`${el}/${tp}/${f}`);
+      });
+    });
+  });
+
+  fs.writeFileSync(`${base}/index.json`, JSON.stringify(result, null, 2));
+  console.log("index.json を生成しました");
+}
+
+generateIndex();
+
