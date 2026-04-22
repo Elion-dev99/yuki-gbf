@@ -1,1 +1,38 @@
+name: Convert raw data
 
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "raw_data.txt"
+
+jobs:
+  convert:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Run converter
+        run: node convert.js
+
+      - name: Install Prettier
+        run: npm install -g prettier
+
+      - name: Format JSON
+        run: prettier --write "data/**/*.json"
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/**/*.json
+          git commit -m "Auto-generate JSON" || echo "No changes"
+          git push
