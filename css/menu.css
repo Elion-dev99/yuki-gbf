@@ -39,7 +39,7 @@ body {
   border-left: 2px solid #7ed6ff;
   transition: 0.3s;
   padding-top: 60px;
-  z-index: 999;
+  z-index: 9998;
 }
 
 .side-menu.open {
@@ -79,6 +79,7 @@ body {
    キャラページ：フィルタ UI
 ================================ */
 #character-filter {
+  pointer-events: none;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
