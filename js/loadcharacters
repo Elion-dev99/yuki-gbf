@@ -1,0 +1,13 @@
+async function loadCharacters() {
+  // index.json を読み込む
+  const index = await fetch("data/characters/index.json").then(r => r.json());
+  const characters = [];
+
+  // index.json に書かれたファイルを順番に読み込む
+  for (const path of index) {
+    const json = await fetch(`data/characters/${path}`).then(r => r.json());
+    characters.push(json);
+  }
+
+  return characters;
+}
