@@ -49,6 +49,7 @@ async function navigate(page) {
     `;
 
     loadCharacters().then(list => {
+      console.log("読み込んだキャラ数:", list.length, list);
       window._characterList = list;
       renderCharacters(list);
       setupCharacterFilter();
