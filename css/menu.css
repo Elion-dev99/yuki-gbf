@@ -45,7 +45,7 @@ body {
 }
 
 .side-menu.open {
-  right: 0;
+  pointer-events: auto;
 }
 
 /* ======== メニュー項目 ======== */
