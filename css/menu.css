@@ -74,3 +74,97 @@ body {
   padding-bottom: 10px;
   margin-bottom: 20px;
 }
+
+/* ================================
+   キャラページ：フィルタ UI
+================================ */
+#character-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  background: rgba(10, 15, 25, 0.6);
+  border-bottom: 2px solid #7ed6ff;
+  margin-bottom: 10px;
+}
+
+#character-filter select,
+#character-filter input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #7ed6ff;
+  background: rgba(20, 30, 50, 0.85);
+  color: #e6f7ff;
+  font-size: 14px;
+}
+
+#character-filter input::placeholder {
+  color: #9bbcd1;
+}
+
+/* ================================
+   キャラカード一覧レイアウト
+================================ */
+#character-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+  padding: 10px;
+}
+
+/* ================================
+   キャラカード本体
+================================ */
+.character-card {
+  background: rgba(10, 15, 25, 0.7);
+  border: 2px solid #7ed6ff;
+  border-radius: 8px;
+  padding: 10px;
+  color: #e6f7ff;
+  box-shadow: 0 0 8px rgba(126, 214, 255, 0.3);
+  transition: 0.2s;
+}
+
+.character-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 12px rgba(155, 226, 255, 0.6);
+}
+
+/* ================================
+   属性色（グラブル風）
+================================ */
+.character-card.fire  { border-color: #ff6b6b; }
+.character-card.water { border-color: #4dabff; }
+.character-card.earth { border-color: #c9a063; }
+.character-card.wind  { border-color: #7ed957; }
+.character-card.light { border-color: #ffe066; }
+.character-card.dark  { border-color: #b084f5; }
+
+/* ================================
+   カード内部
+================================ */
+.char-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.char-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.char-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.char-info {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #cce9ff;
+  line-height: 1.4;
+}
