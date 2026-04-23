@@ -1,0 +1,7 @@
+{
+  "name": "ジータ",
+  "attribute": "light",
+  "type": "balance",
+  "weapons": ["剣", "短剣"],
+  "icon": "https://example.com/djeeta.png"
+}
