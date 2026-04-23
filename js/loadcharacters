@@ -1,5 +1,5 @@
 async function loadCharacters() {
-  // index.json を読み込む
+  /* index.json を読み込む */
   const index = await fetch("data/characters/index.json").then(r => r.json());
   const characters = [];
 
