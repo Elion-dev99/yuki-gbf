@@ -40,6 +40,8 @@ body {
   transition: 0.3s;
   padding-top: 60px;
   z-index: 9998;
+
+  pointer-events: none;
 }
 
 .side-menu.open {
