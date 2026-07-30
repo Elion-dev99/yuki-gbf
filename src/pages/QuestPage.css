@@ -1,0 +1,78 @@
+.quest-page {
+  display: grid;
+  gap: 20px;
+}
+
+.warn {
+  padding: 12px;
+  background: rgba(180, 80, 40, 0.25);
+  border: 1px solid rgba(255, 160, 100, 0.35);
+  color: #ffd0b0;
+  border-radius: 8px;
+}
+
+.quest-list {
+  display: grid;
+  gap: 14px;
+}
+
+.quest-card {
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(126, 214, 255, 0.3);
+  background: linear-gradient(145deg, rgba(14, 32, 56, 0.9), rgba(8, 16, 28, 0.95));
+  animation: title-rise 0.45s ease both;
+}
+
+.quest-card.locked {
+  opacity: 0.55;
+}
+
+.quest-card.cleared {
+  border-color: rgba(126, 217, 87, 0.45);
+}
+
+.quest-meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.chapter {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: #7ed6ff;
+}
+
+.cleared-badge {
+  font-size: 0.68rem;
+  padding: 2px 6px;
+  background: #2a5a30;
+  color: #b8f0c0;
+  border-radius: 3px;
+}
+
+.quest-card h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  letter-spacing: 0.06em;
+}
+
+.quest-card p {
+  margin: 8px 0 0;
+  color: #b8d4e8;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.rewards {
+  margin: 12px 0 16px;
+  font-size: 0.85rem;
+  color: #ffe08a;
+}
+
+.quest-card .btn {
+  width: 100%;
+}

@@ -1,41 +1,17 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>GBF Tools</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/menu.css">
-</head>
-
-<body>
-
-  <!-- ハンバーガーメニュー -->
-  <div class="menu-btn" onclick="toggleMenu()">☰</div>
-
-  <!-- サイドメニュー -->
-  <nav class="side-menu" id="sideMenu">
-    <ul>
-      <li onclick="navigate('home')">ホーム</li>
-      <li onclick="navigate('weapons')">武器一覧</li>
-      <li onclick="navigate('summons')">召喚石</li>
-      <li onclick="navigate('characters')">キャラ</li>
-      <li onclick="navigate('party')">編成ツール</li>
-      <li onclick="navigate('settings')">設定</li>
-    </ul>
-  </nav>
-
-  <!-- SPAコンテンツ領域 -->
-  <main id="app"></main>
-
-  <script src="js/menu.js"></script>
-  
-  <script src="js/loadweapons.js"></script>
-  <script src="js/renderweapons.js"></script>
-
-  <script src="js/loadcharacters.js"></script>
-  <script src="js/rendercharacters.js"></script>
-
-  <script src="js/spa.js"></script>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="蒼穹ファンタジア — 空を駆けるターン制ブラウザRPG。Cloudflare Pages + Firebase。"
+    />
+    <title>蒼穹ファンタジア | Azure Fantasia</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>

@@ -1,0 +1,74 @@
+.summon-page {
+  display: grid;
+  gap: 24px;
+}
+
+.summon-stage {
+  text-align: center;
+  padding: 36px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 224, 138, 0.35);
+  background:
+    radial-gradient(circle at 50% 30%, rgba(255, 224, 138, 0.18), transparent 50%),
+    linear-gradient(160deg, rgba(40, 28, 10, 0.7), rgba(8, 16, 28, 0.95));
+}
+
+.summon-orb {
+  width: 88px;
+  height: 88px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff6c8, #d4a017 45%, #3a2808 80%);
+  box-shadow: 0 0 32px rgba(255, 200, 80, 0.45);
+  transition: transform 0.4s ease;
+}
+
+.summon-stage.spinning .summon-orb {
+  animation: orb-spin 0.6s ease-in-out infinite;
+}
+
+.summon-cost {
+  color: #ffe08a;
+  margin: 0 0 16px;
+}
+
+.summon-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.summon-msg {
+  margin: 16px 0 0;
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  color: #fff;
+  animation: title-rise 0.4s ease both;
+}
+
+.summon-results h2,
+.rates h2 {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+}
+
+.rates ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #9ec8e0;
+  line-height: 1.7;
+  font-size: 0.9rem;
+}
+
+@keyframes orb-spin {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.12) rotate(12deg);
+  }
+}

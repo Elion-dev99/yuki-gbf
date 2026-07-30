@@ -1,0 +1,79 @@
+.page-header h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.08em;
+}
+
+.page-header p {
+  margin: 8px 0 0;
+  color: #9ec8e0;
+  font-size: 0.9rem;
+}
+
+.party-page {
+  display: grid;
+  gap: 24px;
+}
+
+.party-slots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.slot {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px dashed rgba(126, 214, 255, 0.25);
+}
+
+.slot.active {
+  border-style: solid;
+  border-color: #ffe08a;
+}
+
+.slot-num {
+  font-size: 0.75rem;
+  color: #7ed6ff;
+  letter-spacing: 0.1em;
+}
+
+.empty-slot {
+  min-height: 120px;
+  border: 1px dashed rgba(126, 214, 255, 0.4);
+  background: rgba(10, 24, 42, 0.5);
+  color: #9ec8e0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.clear-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 120, 120, 0.35);
+  color: #ffb4b4;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.picker h2 {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.char-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 520px) {
+  .party-slots {
+    grid-template-columns: 1fr;
+  }
+}
