@@ -1,35 +1,41 @@
 .summon-page {
   display: grid;
-  gap: 24px;
+  gap: 20px;
 }
 
 .summon-stage {
   text-align: center;
   padding: 36px 20px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 224, 138, 0.35);
+  border-radius: 20px;
+  border: 2px solid rgba(201, 151, 26, 0.45);
   background:
-    radial-gradient(circle at 50% 30%, rgba(255, 224, 138, 0.18), transparent 50%),
-    linear-gradient(160deg, rgba(40, 28, 10, 0.7), rgba(8, 16, 28, 0.95));
+    radial-gradient(circle at 50% 30%, rgba(255, 230, 140, 0.55), transparent 55%),
+    linear-gradient(160deg, #fff8dc, #e8f4fc 55%, #fffaf4);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
 }
 
 .summon-orb {
-  width: 88px;
-  height: 88px;
+  width: 96px;
+  height: 96px;
   margin: 0 auto 18px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff6c8, #d4a017 45%, #3a2808 80%);
-  box-shadow: 0 0 32px rgba(255, 200, 80, 0.45);
+  background:
+    radial-gradient(circle at 35% 30%, #fffce8, #f0d078 42%, #2a86c4 78%);
+  box-shadow: 0 0 36px rgba(240, 200, 80, 0.55), 0 10px 24px rgba(42, 134, 196, 0.25);
+  border: 3px solid #fff;
   transition: transform 0.4s ease;
 }
 
 .summon-stage.spinning .summon-orb {
-  animation: orb-spin 0.6s ease-in-out infinite;
+  animation: orb-spin 0.55s ease-in-out infinite;
 }
 
 .summon-cost {
-  color: #ffe08a;
+  color: #9a7010;
   margin: 0 0 16px;
+  font-weight: 700;
 }
 
 .summon-btns {
@@ -43,7 +49,8 @@
   margin: 16px 0 0;
   font-family: var(--font-display);
   letter-spacing: 0.08em;
-  color: #fff;
+  color: var(--ink);
+  font-size: 1.2rem;
   animation: title-rise 0.4s ease both;
 }
 
@@ -51,14 +58,21 @@
 .rates h2 {
   margin: 0 0 12px;
   font-family: var(--font-display);
-  font-size: 1.1rem;
-  letter-spacing: 0.06em;
+  font-size: 1.15rem;
+  letter-spacing: 0.05em;
+}
+
+.rates {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(255, 252, 248, 0.9);
+  border: 2px solid rgba(126, 182, 216, 0.4);
 }
 
 .rates ul {
   margin: 0;
   padding-left: 1.2rem;
-  color: #9ec8e0;
+  color: var(--ink-soft);
   line-height: 1.7;
   font-size: 0.9rem;
 }
@@ -69,6 +83,6 @@
     transform: scale(1) rotate(0deg);
   }
   50% {
-    transform: scale(1.12) rotate(12deg);
+    transform: scale(1.12) rotate(14deg);
   }
 }

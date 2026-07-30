@@ -1,6 +1,6 @@
 .chars-page {
   display: grid;
-  gap: 20px;
+  gap: 18px;
 }
 
 .filters {
@@ -8,14 +8,19 @@
   flex-wrap: wrap;
   gap: 12px;
   align-items: center;
+  padding: 12px;
+  border-radius: 14px;
+  background: rgba(255, 252, 248, 0.88);
+  border: 2px solid rgba(126, 182, 216, 0.45);
 }
 
 .filters select {
   padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid rgba(126, 214, 255, 0.35);
-  background: rgba(10, 24, 42, 0.9);
-  color: #e8f6ff;
+  border-radius: 999px;
+  border: 1.5px solid var(--line);
+  background: #fff;
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .check {
@@ -23,16 +28,13 @@
   align-items: center;
   gap: 8px;
   font-size: 0.9rem;
-  color: #c5e4f5;
+  color: var(--ink);
+  font-weight: 700;
 }
 
 .empty {
-  color: #9ec8e0;
+  color: var(--ink-soft);
   text-align: center;
   padding: 40px 0;
-}
-
-.unowned-hint {
-  font-size: 0.8rem;
-  color: #7a9bb0;
+  font-weight: 700;
 }

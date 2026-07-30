@@ -1,80 +1,231 @@
 .char-card {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  border: 1px solid rgba(126, 214, 255, 0.35);
-  background: linear-gradient(160deg, rgba(12, 28, 48, 0.9), rgba(8, 16, 30, 0.95));
-  color: #e8f6ff;
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
+  display: block;
+  width: 100%;
   padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  color: var(--ink);
+  animation: title-rise 0.45s ease both;
+}
+
+.char-frame {
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(180deg, #ffffff, #f3f8fc);
+  border: 2.5px solid #9ec8e0;
+  box-shadow: var(--shadow);
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-  animation: card-in 0.45s ease both;
 }
 
-.char-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 28px rgba(0, 40, 80, 0.45);
+.char-card:hover .char-frame {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 28px rgba(40, 90, 140, 0.22);
 }
 
-.char-card.selected {
-  border-color: #ffe08a;
-  box-shadow: 0 0 0 2px rgba(255, 224, 138, 0.45);
+.char-card.selected .char-frame {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(240, 208, 120, 0.55), var(--shadow);
+}
+
+.char-card.rarity-ssr .char-frame {
+  border: 3px solid transparent;
+  background:
+    linear-gradient(180deg, #fffdf6, #fff4d8) padding-box,
+    linear-gradient(135deg, #f0d078, #fff8d0, #c9971a, #f0d078) border-box;
+  box-shadow: 0 10px 28px rgba(201, 151, 26, 0.28);
+}
+
+.char-card.rarity-sr .char-frame {
+  border-color: #8b6cc0;
 }
 
 .char-card-art {
-  height: 96px;
+  position: relative;
+  height: 130px;
+  overflow: hidden;
+}
+
+.portrait {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: end center;
+}
+
+.glow {
+  position: absolute;
+  inset: 10% 15% auto;
+  height: 55%;
+  border-radius: 50%;
+  opacity: 0.55;
+  filter: blur(8px);
+}
+
+.face {
+  position: absolute;
+  bottom: 28px;
+  width: 42px;
+  height: 48px;
+  border-radius: 42% 42% 38% 38%;
+  background: linear-gradient(180deg, #ffe2c8, #f0b890);
+  z-index: 2;
+}
+
+.hair {
+  position: absolute;
+  bottom: 52px;
+  width: 58px;
+  height: 44px;
+  border-radius: 50% 50% 20% 20%;
+  z-index: 3;
+}
+
+.cloak {
+  position: absolute;
+  bottom: 0;
+  width: 78px;
+  height: 46px;
+  border-radius: 40% 40% 10% 10%;
+  z-index: 1;
+}
+
+.el-seal {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
   display: grid;
   place-items: center;
-  background:
-    radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.18), transparent 55%),
-    linear-gradient(145deg, rgba(30, 80, 120, 0.5), rgba(8, 20, 40, 0.8));
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  font-size: 0.72rem;
+  font-weight: 700;
+  z-index: 4;
 }
 
+/* Element backdrops + portrait colors */
 .char-card.fire .char-card-art {
-  background: linear-gradient(145deg, #6a2030, #1a1018);
+  background: linear-gradient(160deg, #ffb199, #ff6b4a 45%, #8a2018);
 }
+.char-card.fire .glow {
+  background: #ff9a70;
+}
+.char-card.fire .hair {
+  background: #5a1a10;
+}
+.char-card.fire .cloak {
+  background: linear-gradient(180deg, #ff7045, #a82818);
+}
+.char-card.fire .el-seal {
+  color: var(--fire);
+}
+
 .char-card.water .char-card-art {
-  background: linear-gradient(145deg, #1a4a7a, #0a1828);
+  background: linear-gradient(160deg, #b7e4ff, #4aa3e0 45%, #1a4a7a);
 }
+.char-card.water .glow {
+  background: #8fd0ff;
+}
+.char-card.water .hair {
+  background: #1e4a7a;
+}
+.char-card.water .cloak {
+  background: linear-gradient(180deg, #5eb4e8, #1a5f96);
+}
+.char-card.water .el-seal {
+  color: var(--water);
+}
+
 .char-card.earth .char-card-art {
-  background: linear-gradient(145deg, #5a4030, #1a1410);
+  background: linear-gradient(160deg, #e8d0a8, #c49a58 45%, #5a3a18);
 }
+.char-card.earth .glow {
+  background: #e0c090;
+}
+.char-card.earth .hair {
+  background: #4a3018;
+}
+.char-card.earth .cloak {
+  background: linear-gradient(180deg, #c9a063, #6a4218);
+}
+.char-card.earth .el-seal {
+  color: var(--earth);
+}
+
 .char-card.wind .char-card-art {
-  background: linear-gradient(145deg, #2a5a38, #0e1a14);
+  background: linear-gradient(160deg, #c8f0d0, #6dcf88 45%, #1f5a35);
 }
+.char-card.wind .glow {
+  background: #a8e8b8;
+}
+.char-card.wind .hair {
+  background: #2a6a40;
+}
+.char-card.wind .cloak {
+  background: linear-gradient(180deg, #7ed957, #2f7a45);
+}
+.char-card.wind .el-seal {
+  color: var(--wind);
+}
+
 .char-card.light .char-card-art {
-  background: linear-gradient(145deg, #6a5a28, #1a1810);
+  background: linear-gradient(160deg, #fff4c8, #f0d078 45%, #8a6a10);
 }
+.char-card.light .glow {
+  background: #ffe9a0;
+}
+.char-card.light .hair {
+  background: #c9a020;
+}
+.char-card.light .cloak {
+  background: linear-gradient(180deg, #ffe08a, #c9971a);
+}
+.char-card.light .el-seal {
+  color: var(--light);
+}
+
 .char-card.dark .char-card-art {
-  background: linear-gradient(145deg, #3a2858, #100818);
+  background: linear-gradient(160deg, #d8c8f0, #7a68b0 45%, #2a1848);
+}
+.char-card.dark .glow {
+  background: #b8a0e0;
+}
+.char-card.dark .hair {
+  background: #1a1028;
+}
+.char-card.dark .cloak {
+  background: linear-gradient(180deg, #8a78c0, #3a2860);
+}
+.char-card.dark .face {
+  background: linear-gradient(180deg, #f0d8c8, #d0a888);
+}
+.char-card.dark .el-seal {
+  color: var(--dark);
 }
 
-.glyph {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  opacity: 0.85;
-  letter-spacing: 0.1em;
+/* Per-character hair tweaks */
+.char-lyra .hair {
+  background: linear-gradient(180deg, #fff0b0, #d4a820);
+  width: 64px;
 }
-
-.char-card.fire {
-  border-color: #ff7a7a;
+.char-kael .hair {
+  background: #2a1008;
+  height: 36px;
 }
-.char-card.water {
-  border-color: #5bb8ff;
+.char-mireille .hair {
+  background: linear-gradient(180deg, #d8f0ff, #6ab0d8);
 }
-.char-card.earth {
-  border-color: #c9a063;
+.char-sylph .hair {
+  background: linear-gradient(180deg, #e8ffe8, #6dcf88);
+  border-radius: 60% 60% 20% 20%;
 }
-.char-card.wind {
-  border-color: #7ed957;
-}
-.char-card.light {
-  border-color: #ffe066;
-}
-.char-card.dark {
-  border-color: #b084f5;
+.char-noir .hair {
+  background: #0a0612;
+  width: 62px;
 }
 
 .char-card-body {
@@ -89,65 +240,67 @@
 
 .rarity-badge,
 .el-badge {
-  font-size: 0.68rem;
-  padding: 2px 6px;
-  border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
 }
 
 .r-ssr {
-  background: linear-gradient(90deg, #c9a227, #f0e6a8);
-  color: #2a2000;
-  border: none;
+  background: linear-gradient(90deg, #f0d078, #fff3b0, #c9971a);
+  background-size: 200% 100%;
+  animation: shimmer 2.4s linear infinite;
+  color: #3a2a00;
 }
 .r-sr {
-  background: #5a3d8a;
-  color: #f0e8ff;
+  background: linear-gradient(90deg, #8b6cc0, #c4a8f0);
+  color: #fff;
 }
 .r-r {
-  background: #2a5080;
-  color: #d8ecff;
+  background: linear-gradient(90deg, #3a8fd4, #8fc4f0);
+  color: #fff;
 }
 .r-n {
-  background: #3a3a3a;
-  color: #ddd;
+  background: #8a9aac;
+  color: #fff;
+}
+
+.el-badge {
+  background: rgba(42, 134, 196, 0.12);
+  color: var(--azure-deep);
+  border: 1px solid rgba(42, 134, 196, 0.25);
 }
 
 .char-card h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .meta {
   margin: 4px 0 0;
-  font-size: 0.78rem;
-  color: #9ec8e0;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+  font-weight: 700;
 }
 
 .flavor {
   margin: 8px 0 0;
-  font-size: 0.75rem;
-  color: #b8d4e8;
+  font-size: 0.74rem;
+  color: var(--ink-soft);
   line-height: 1.45;
 }
 
 .char-card.compact .char-card-art {
-  height: 64px;
+  height: 92px;
 }
 
 .char-card.compact h3 {
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
-@keyframes card-in {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.char-card.compact .flavor {
+  display: none;
 }
