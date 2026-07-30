@@ -46,44 +46,26 @@ npx -y firebase-tools@latest use <YOUR_PROJECT_ID>
 npx -y firebase-tools@latest deploy --only firestore:rules
 ```
 
-### Cloudflare Pages（自動デプロイ）
+### Cloudflare Workers（自動デプロイ）
 
-このリポジトリでは次の **どちらか（または両方）** でデプロイできます。
+公開 URL: **https://gbf.elion-dev08.workers.dev/**
 
-#### A. Cloudflare ダッシュボードの Git 連携（推奨・既存）
+`master` / `main` への push で [`.github/workflows/deploy-cloudflare-workers.yml`](.github/workflows/deploy-cloudflare-workers.yml) がビルドし、Worker 名 `gbf` へ `wrangler deploy` します。
 
-Workers & Pages でリポジトリを接続済みなら、push のたびに `pages build and deployment` が走ります。追加の GitHub Secret は不要です。
-
-#### B. GitHub Actions + Wrangler
-
-[`.github/workflows/deploy-cloudflare-pages.yml`](.github/workflows/deploy-cloudflare-pages.yml) がビルドし、Secrets があるときだけ `wrangler pages deploy` します。  
-**Secrets 未設定の場合はビルドのみ成功し、デプロイはスキップ**します（赤い失敗にはなりません）。
-
-##### 1. API トークンを作成
-
-1. [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens) → **Create Token**
-2. テンプレート **Edit Cloudflare Workers** を使うか、次の権限を付与:
-   - Account → Cloudflare Pages → Edit
-   - Account → Account Settings → Read
-3. Account リソースで対象アカウントを選択
-
-##### 2. GitHub Secrets を設定
-
-リポジトリ → **Settings** → **Secrets and variables** → **Actions**:
+#### GitHub Secrets
 
 | Secret | 内容 |
 |--------|------|
-| `CLOUDFLARE_API_TOKEN` | 上記 API トークン（**必須・Bの場合**） |
-| `CLOUDFLARE_ACCOUNT_ID` | ダッシュボードの Account ID（**必須・Bの場合**） |
+| `CLOUDFLARE_API_TOKEN` | [API Token](https://dash.cloudflare.com/profile/api-tokens)（Edit Cloudflare Workers） |
+| `CLOUDFLARE_ACCOUNT_ID` | ダッシュボードの Account ID |
 | `VITE_FIREBASE_*` | （任意）Firebase Web 設定 |
 
-##### 3. Pages プロジェクト名
+Secrets 未設定の場合はビルドのみ成功し、デプロイはスキップされます。
 
-Wrangler 側のプロジェクト名は `azure-fantasia` です。
+#### 手動デプロイ
 
 ```bash
-npm run build
-npx wrangler pages deploy dist --project-name=azure-fantasia
+npm run deploy
 ```
 
 ## スクリプト
@@ -92,7 +74,7 @@ npx wrangler pages deploy dist --project-name=azure-fantasia
 |----------|------|
 | `npm run dev` | ローカル開発 |
 | `npm run build` | 本番ビルド |
-| `npm run pages:deploy` | Cloudflare Pages へデプロイ |
+| `npm run deploy` | ビルドして Cloudflare Worker `gbf` へデプロイ |
 
 ## ライセンス / 免責
 
