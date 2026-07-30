@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useGm } from '../context/GmContext'
 import { CHARACTER_MAP } from '../data/characters'
 import { SUMMON_MAP } from '../data/equipment'
 import { QUEST_MAP } from '../data/quests'
@@ -21,6 +22,7 @@ import './BattlePage.css'
 export function BattlePage() {
   const { questId } = useParams()
   const { profile, updateProfile } = useAuth()
+  const { godMode } = useGm()
   const navigate = useNavigate()
   const quest = questId ? QUEST_MAP[questId] : undefined
   const [battle, setBattle] = useState<BattleState | null>(null)
@@ -32,7 +34,7 @@ export function BattlePage() {
   useEffect(() => {
     if (!profile || !quest) return
     try {
-      setBattle(startBattle(quest, profile))
+      setBattle(startBattle(quest, profile, { godMode }))
       setRewardApplied(false)
       setError('')
     } catch (e) {
@@ -73,16 +75,16 @@ export function BattlePage() {
 
   if (error) {
     return (
-      <div className="gbf-battle">
-        <p className="center-msg">{error}</p>
-        <Link to="/party">編成へ</Link>
+      <div className="ff-battle">
+        <p className="center-msg ff-window">{error}</p>
+        <Link to="/party">パーティへ</Link>
       </div>
     )
   }
   if (!quest || !battle) {
     return (
-      <div className="gbf-battle">
-        <p className="center-msg">Ready...</p>
+      <div className="ff-battle">
+        <p className="center-msg ff-window">Ready...</p>
       </div>
     )
   }
@@ -94,16 +96,19 @@ export function BattlePage() {
   }
 
   return (
-    <div className={`gbf-battle ${flash ? 'flash' : ''}`}>
+    <div className={`ff-battle ${flash ? 'flash' : ''} ${battle.godMode ? 'god' : ''}`}>
       <div className="bb-bg" aria-hidden />
 
-      <header className="bb-top">
+      <header className="bb-top ff-window">
         <button type="button" className="bb-retreat" onClick={() => navigate('/quests')}>
-          撤退
+          逃げる
         </button>
         <div className="bb-title">
           <strong>{quest.name}</strong>
-          <span>Turn {battle.turn}</span>
+          <span>
+            Turn {battle.turn}
+            {battle.godMode ? ' · GOD' : ''}
+          </span>
         </div>
         <div className="bb-spacer" />
       </header>
@@ -113,7 +118,7 @@ export function BattlePage() {
           <button
             key={e.uid}
             type="button"
-            className={`bb-foe ${e.isBoss ? 'boss' : ''} ${e.hp <= 0 ? 'down' : ''} ${battle.selectedEnemy === i ? 'on' : ''}`}
+            className={`bb-foe ff-window ${e.isBoss ? 'boss' : ''} ${e.hp <= 0 ? 'down' : ''} ${battle.selectedEnemy === i ? 'on' : ''}`}
             disabled={e.hp <= 0 || battle.phase !== 'command'}
             onClick={() => setBattle(selectEnemy(battle, i))}
           >
@@ -124,7 +129,10 @@ export function BattlePage() {
               <div style={{ width: `${(e.hp / e.maxHp) * 100}%` }} />
             </div>
             <div className="bb-foe-meta">
-              <span>{e.name}</span>
+              <span>
+                {battle.selectedEnemy === i ? '▶ ' : ''}
+                {e.name}
+              </span>
               <span>
                 {e.hp}/{e.maxHp}
               </span>
@@ -135,7 +143,7 @@ export function BattlePage() {
 
       <div className="bb-dock">
         {showAbil && selected && selected.hp > 0 && battle.phase === 'command' && (
-          <div className="bb-abils">
+          <div className="bb-abils ff-window">
             <div className="bb-abils-head">
               <span>{selected.name} のアビリティ</span>
               <button type="button" onClick={() => setShowAbil(false)}>
@@ -153,7 +161,10 @@ export function BattlePage() {
                   disabled={cd > 0}
                   onClick={() => setBattle(toggleAbility(battle, battle.selectedAlly, s.id))}
                 >
-                  <strong>{s.name}</strong>
+                  <strong>
+                    {on ? '▶ ' : ''}
+                    {s.name}
+                  </strong>
                   <small>{cd > 0 ? `再使用まで ${cd}` : s.description}</small>
                 </button>
               )
@@ -164,7 +175,7 @@ export function BattlePage() {
         <div className="bb-summons">
           <button
             type="button"
-            className="bb-summon-slot"
+            className="bb-summon-slot ff-window"
             disabled={
               battle.phase !== 'command' ||
               battle.summonGauge < 100 ||
@@ -177,7 +188,7 @@ export function BattlePage() {
             <div className="ss-gauge">
               <div style={{ width: `${battle.summonGauge}%` }} />
             </div>
-            <span>{summon?.name ?? '召喚石なし'}</span>
+            <span>{summon?.name ?? '召喚なし'}</span>
           </button>
         </div>
 
@@ -186,7 +197,7 @@ export function BattlePage() {
             <button
               key={a.uid}
               type="button"
-              className={`bb-chara ${a.element} ${a.hp <= 0 ? 'down' : ''} ${battle.selectedAlly === i ? 'sel' : ''} ${a.queuedSkillId ? 'queued' : ''}`}
+              className={`bb-chara ff-window ${a.element} ${a.hp <= 0 ? 'down' : ''} ${battle.selectedAlly === i ? 'sel' : ''} ${a.queuedSkillId ? 'queued' : ''}`}
               disabled={a.hp <= 0}
               onClick={() => {
                 setBattle(selectAlly(battle, i))
@@ -208,7 +219,7 @@ export function BattlePage() {
           ))}
 
           {battle.phase === 'command' && (
-            <div className="bb-cmd">
+            <div className="bb-cmd ff-window">
               <button type="button" className="bb-btn abil" onClick={() => setShowAbil((v) => !v)}>
                 アビリティ
               </button>
@@ -220,17 +231,17 @@ export function BattlePage() {
                   act(() => pressAttack(battle))
                 }}
               >
-                攻撃
+                ▶ たたかう
               </button>
             </div>
           )}
         </div>
 
-        {battle.phase === 'enemy' && <div className="bb-phase">Enemy Turn</div>}
+        {battle.phase === 'enemy' && <div className="bb-phase ff-window">Enemy Turn</div>}
 
         {(battle.phase === 'won' || battle.phase === 'lost') && (
-          <div className="bb-result">
-            <h2>{battle.phase === 'won' ? 'QUEST CLEAR' : 'DEFEAT'}</h2>
+          <div className="bb-result ff-window">
+            <h2>{battle.phase === 'won' ? '勝利' : '敗北'}</h2>
             {battle.phase === 'won' && (
               <p>
                 ◎{quest.rewards.rupies}　◆{quest.rewards.crystals}　EXP {quest.rewards.exp}
@@ -243,7 +254,7 @@ export function BattlePage() {
         )}
       </div>
 
-      <div className="bb-log">
+      <div className="bb-log ff-window">
         {[...battle.logs].reverse().slice(0, 6).map((l) => (
           <div key={l.id} className={`l-${l.kind}`}>
             {l.text}

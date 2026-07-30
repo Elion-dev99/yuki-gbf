@@ -1,0 +1,90 @@
+.gm-page {
+  padding: 12px 12px 88px;
+  display: grid;
+  gap: 12px;
+}
+
+.gm-page .page-head h1 {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  color: #ffe566;
+}
+
+.gm-page .page-head p {
+  margin: 6px 0 0;
+  color: #c8d8ff;
+  font-size: 0.78rem;
+}
+
+.gm-unlock,
+.gm-panel {
+  display: grid;
+  gap: 12px;
+}
+
+.gm-unlock input {
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px 12px;
+  border: 2px solid #fff;
+  background: #001848;
+  color: #fff;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.gm-unlock .hint {
+  margin: 8px 0 0;
+  font-size: 0.72rem;
+  color: #9eb0e0;
+}
+
+.gm-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 8px 0;
+  cursor: pointer;
+  color: #fff;
+}
+
+.gm-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: #ffe566;
+}
+
+.gm-actions {
+  display: grid;
+  gap: 10px;
+}
+
+.gm-actions h2,
+.gm-panel h2 {
+  margin: 0 0 4px;
+  font-size: 0.95rem;
+  color: #ffe566;
+  letter-spacing: 0.08em;
+}
+
+.gm-panel .note {
+  margin: 4px 0 0;
+  font-size: 0.72rem;
+  color: #9eb0e0;
+}
+
+.gm-msg {
+  margin: 0;
+  padding: 10px 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.gm-msg.ok {
+  color: #9dffb0;
+}
+
+.gm-msg.err {
+  color: #ff9a9a;
+}

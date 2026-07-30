@@ -52,9 +52,9 @@ export function LoginPage() {
       </div>
 
       <div className="ts-logo">
-        <p className="ts-sub">GRANBLUE-LIKE SKY RPG</p>
+        <p className="ts-sub">SKY FANTASY RPG</p>
         <h1>蒼穹ファンタジア</h1>
-        <p className="ts-tag">空の彼方へ、戦いの旅が始まる</p>
+        <p className="ts-tag">星空の彼方で、伝説が始まる</p>
       </div>
 
       <div className="ts-actions">

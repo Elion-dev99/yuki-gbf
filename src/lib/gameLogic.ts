@@ -114,7 +114,11 @@ export function calcGridBonus(profile: PlayerProfile): {
   return { atk: Math.floor(atk / 4), hp: Math.floor(hp / 4), auraByElement, mainSummonId }
 }
 
-export function startBattle(quest: QuestDef, profile: PlayerProfile): BattleState {
+export function startBattle(
+  quest: QuestDef,
+  profile: PlayerProfile,
+  opts?: { godMode?: boolean },
+): BattleState {
   const grid = calcGridBonus(profile)
   const allies: BattleFighter[] = []
   for (const slot of profile.party.slots) {
@@ -130,18 +134,23 @@ export function startBattle(quest: QuestDef, profile: PlayerProfile): BattleStat
   }
   if (allies.length === 0) throw new Error('パーティにキャラクターがいません')
   const enemies = quest.enemies.map((id, i) => createEnemyFighter(id, i))
+  const godMode = !!opts?.godMode
   return {
     questId: quest.id,
     allies,
     enemies,
     turn: 1,
     phase: 'command',
-    logs: [log('system', `${quest.name} —— バトルスタート！`)],
+    logs: [
+      log('system', `${quest.name} —— バトルスタート！`),
+      ...(godMode ? [log('system', '【GM】ゴッドモード起動')] : []),
+    ],
     selectedAlly: 0,
     selectedEnemy: 0,
     summonGauge: 100,
     mainSummonId: grid.mainSummonId,
     summonUsed: false,
+    godMode,
   }
 }
 
@@ -150,7 +159,14 @@ function calcDamage(
   defender: BattleFighter,
   power: number,
   element: Element,
+  godMode?: boolean,
 ): number {
+  if (godMode && !attacker.isEnemy && defender.isEnemy) {
+    return Math.max(99999, Math.floor(defender.maxHp * 0.55))
+  }
+  if (godMode && attacker.isEnemy && !defender.isEnemy) {
+    return 0
+  }
   const atk = attacker.atk * (1 + attacker.atkBuff)
   const def = Math.max(1, defender.def * (1 + defender.defBuff))
   const raw = (atk * 0.55 + power) * (100 / (100 + def * 0.45))
@@ -212,7 +228,7 @@ function applySkillEffects(
     if (!state.enemies[ei] || state.enemies[ei].hp <= 0) ei = firstLivingEnemy(state)
     const enemy = state.enemies[ei]
     if (enemy && enemy.hp > 0) {
-      const dmg = calcDamage(ally, enemy, skill.power, ally.element)
+      const dmg = calcDamage(ally, enemy, skill.power, ally.element, state.godMode)
       enemy.hp = Math.max(0, enemy.hp - dmg)
       state.logs.push(log('skill', `${ally.name}「${skill.name}」！ ${enemy.name} に ${dmg}`))
     }
@@ -282,7 +298,7 @@ export function pressAttack(state: BattleState): BattleState {
     if (ally.charge >= CHARGE_MAX) {
       const power = cdef?.chargePower ?? 300
       const name = cdef?.chargeName ?? '奥義'
-      const dmg = calcDamage(ally, enemy, power, ally.element)
+      const dmg = calcDamage(ally, enemy, power, ally.element, next.godMode)
       enemy.hp = Math.max(0, enemy.hp - dmg)
       ally.charge = 0
       next.logs.push(log('charge', `${ally.name} 奥義「${name}」！ ${dmg} ダメージ`))
@@ -293,7 +309,7 @@ export function pressAttack(state: BattleState): BattleState {
         next.logs.push(log('heal', `${ally.name} の奥義で全体回復`))
       }
     } else {
-      const dmg = calcDamage(ally, enemy, ally.atk * 0.12, ally.element)
+      const dmg = calcDamage(ally, enemy, ally.atk * 0.12, ally.element, next.godMode)
       enemy.hp = Math.max(0, enemy.hp - dmg)
       ally.charge = Math.min(CHARGE_MAX, ally.charge + 20)
       next.logs.push(log('attack', `${ally.name} の攻撃！ ${dmg}`))
@@ -342,7 +358,7 @@ export function callSummon(state: BattleState): BattleState {
     defBuff: 0,
     queuedSkillId: null,
   }
-  const dmg = calcDamage(fakeAtk, enemy, summon.callPower, summon.element)
+  const dmg = calcDamage(fakeAtk, enemy, summon.callPower, summon.element, next.godMode)
   enemy.hp = Math.max(0, enemy.hp - dmg)
   next.summonGauge = 0
   next.summonUsed = true
@@ -364,9 +380,16 @@ export function runEnemyTurn(state: BattleState): BattleState {
     const targets = living(next.allies)
     if (targets.length === 0) break
     const target = targets[Math.floor(Math.random() * targets.length)]
-    const dmg = calcDamage(enemy, target, enemy.atk * 0.18, enemy.element)
+    const dmg = calcDamage(enemy, target, enemy.atk * 0.18, enemy.element, next.godMode)
     target.hp = Math.max(0, target.hp - dmg)
-    next.logs.push(log('attack', `${enemy.name} の攻撃！ ${target.name} に ${dmg}`))
+    next.logs.push(
+      log(
+        'attack',
+        dmg === 0 && next.godMode
+          ? `${enemy.name} の攻撃！ ${target.name} は無傷（GM）`
+          : `${enemy.name} の攻撃！ ${target.name} に ${dmg}`,
+      ),
+    )
   }
 
   checkEnd(next)
@@ -492,8 +515,16 @@ export function applyQuestRewards(profile: PlayerProfile, quest: QuestDef): Play
   return next
 }
 
-export function spendAp(profile: PlayerProfile, cost: number): PlayerProfile | null {
+export function spendAp(
+  profile: PlayerProfile,
+  cost: number,
+  opts?: { free?: boolean },
+): PlayerProfile | null {
   const next = migrateProfile(profile)
+  if (opts?.free) {
+    next.updatedAt = Date.now()
+    return next
+  }
   if (next.ap < cost) return null
   next.ap -= cost
   next.updatedAt = Date.now()

@@ -1,108 +1,96 @@
 .summon-gbf {
-  background: linear-gradient(180deg, #1a237e, #0d47a1 40%, #e3f2fd 40%);
-  min-height: calc(100dvh - 128px);
+  min-height: calc(100dvh - 140px);
   display: grid;
   gap: 0;
+  padding-bottom: 88px;
+  background: transparent;
 }
 
 .summon-gbf .gbf-ph {
-  background: linear-gradient(180deg, #4527a0, #6a1b9a);
+  margin: 10px 10px 0;
 }
 
 .summon-stage {
-  margin: 0 12px;
+  margin: 12px;
   text-align: center;
   padding: 18px 12px 20px;
-  border-radius: 12px;
-  border: 3px solid var(--gbf-gold);
+  border: 2px solid #fff;
   background:
-    radial-gradient(circle at 50% 20%, rgba(255, 230, 140, 0.4), transparent 50%),
-    linear-gradient(160deg, #311b92, #1a237e 55%, #0d47a1);
+    radial-gradient(circle at 50% 20%, rgba(255, 229, 102, 0.18), transparent 50%),
+    linear-gradient(180deg, #12306a, #0a1a48);
   color: #fff;
-  box-shadow: var(--shadow);
-  position: relative;
-  top: -2px;
+  box-shadow: inset 0 0 0 3px #8eb4ff, var(--shadow);
 }
 
 .banner-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.5rem;
-  letter-spacing: 0.14em;
-  color: #ffe082;
-  text-shadow: 0 2px 0 #4a148c;
+  font-size: 1.4rem;
+  letter-spacing: 0.16em;
+  color: #ffe566;
+  text-shadow: 0 2px 0 #061030;
 }
 
 .banner-sub {
-  margin: 4px 0 0;
+  margin: 6px 0 0;
   font-size: 0.78rem;
   font-weight: 700;
-  opacity: 0.9;
+  color: #a8b8e0;
 }
 
 .summon-orb {
   width: 92px;
   height: 92px;
-  margin: 14px auto;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fffde7, #ffd54f 40%, #7e57c2 78%);
+  margin: 16px auto;
+  border-radius: 0;
+  background: radial-gradient(circle at 35% 30%, #fffde7, #f0c040 40%, #1a4a9c 78%);
   border: 3px solid #fff;
-  box-shadow: 0 0 30px rgba(255, 213, 79, 0.55);
+  box-shadow: 0 0 30px rgba(255, 229, 102, 0.35), inset 0 0 0 3px #8eb4ff;
+  animation: float-y 3.5s ease-in-out infinite;
 }
 
 .summon-stage.spinning .summon-orb {
-  animation: orb-spin 0.45s ease-in-out infinite;
+  animation: spin 0.7s linear infinite;
 }
 
 .summon-cost {
   margin: 0 0 12px;
-  font-weight: 800;
-  color: #ffe082;
+  color: #c8d8ff;
+  font-size: 0.8rem;
 }
 
 .summon-btns {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
   gap: 8px;
-  justify-content: center;
 }
 
 .summon-msg {
   margin: 12px 0 0;
-  font-family: var(--font-display);
-  letter-spacing: 0.06em;
-  font-size: 1.05rem;
-  animation: title-rise 0.35s ease both;
+  color: #ffe566;
+  font-weight: 700;
 }
 
 .summon-results,
 .rates {
-  margin: 12px;
+  margin: 0 12px 12px;
 }
 
 .summon-results h2,
 .rates h2 {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+  color: #ffe566;
+  font-family: var(--font-display);
+  letter-spacing: 0.1em;
   font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--gbf-blue-deep);
-}
-
-.rates {
-  padding: 12px;
 }
 
 .rates ul {
   margin: 0;
-  padding-left: 1.1rem;
-  color: var(--gbf-ink-soft);
-  line-height: 1.7;
-  font-size: 0.82rem;
-  font-weight: 700;
+  padding-left: 1.1em;
+  color: #c8d8ff;
+  font-size: 0.8rem;
 }
 
-@keyframes orb-spin {
-  50% {
-    transform: scale(1.1) rotate(12deg);
-  }
+.rates li {
+  margin: 4px 0;
 }

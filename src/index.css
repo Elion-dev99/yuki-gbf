@@ -1,49 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;700;800&family=Zen+Antique:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap');
 
 :root {
-  /* GBF-like chrome */
-  --font-display: 'Zen Antique', 'Hiragino Mincho ProN', serif;
-  --font-body: 'M PLUS Rounded 1c', 'Hiragino Sans', sans-serif;
+  /* Classic Final Fantasy menu palette */
+  --font-display: 'Cinzel', 'Times New Roman', serif;
+  --font-body: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
 
-  --gbf-blue: #0d5ea8;
-  --gbf-blue-deep: #08457e;
-  --gbf-blue-mid: #1a78c2;
-  --gbf-blue-light: #5eb3e8;
-  --gbf-gold: #e6c35c;
-  --gbf-gold-dark: #b88920;
-  --gbf-gold-shine: #fff0a8;
-  --gbf-panel: #f7fbff;
-  --gbf-panel-edge: #3d8fd0;
-  --gbf-ink: #1a3355;
-  --gbf-ink-soft: #4d6a8a;
-  --gbf-hp: #3dcc66;
-  --gbf-hp-enemy: #ef5350;
-  --gbf-charge: #ffd54f;
-  --gbf-ap: #4fc3f7;
-  --gbf-bp: #ff8a65;
-  --gbf-rupie: #ffd54f;
-  --gbf-crystal: #81d4fa;
+  --ff-navy: #0a1a48;
+  --ff-navy-mid: #12306a;
+  --ff-navy-deep: #061030;
+  --ff-blue: #1a4a9c;
+  --ff-border: #ffffff;
+  --ff-border-inner: #8eb4ff;
+  --ff-text: #f4f7ff;
+  --ff-muted: #a8b8e0;
+  --ff-yellow: #ffe566;
+  --ff-gold: #f0c040;
+  --ff-hp: #3ddc6a;
+  --ff-mp: #4aa3ff;
+  --ff-danger: #ff6b6b;
+  --ff-ok: #7dffb0;
 
-  --sky-top: #4aa3d8;
-  --sky-mid: #8ec8ea;
-  --sky-low: #d7eef8;
-  --horizon: #f3e2b3;
+  --ink: var(--ff-text);
+  --ink-soft: var(--ff-muted);
+  --azure: var(--ff-blue);
+  --azure-deep: var(--ff-navy);
+  --gold: var(--ff-gold);
+  --gold-bright: var(--ff-yellow);
+  --line: var(--ff-border-inner);
+  --panel: var(--ff-navy-mid);
+  --danger: var(--ff-danger);
+  --ok: var(--ff-ok);
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --radius: 0;
 
-  --ink: var(--gbf-ink);
-  --ink-soft: var(--gbf-ink-soft);
-  --azure: var(--gbf-blue-mid);
-  --azure-deep: var(--gbf-blue-deep);
-  --gold: var(--gbf-gold-dark);
-  --gold-bright: var(--gbf-gold);
-  --line: var(--gbf-panel-edge);
-  --panel: var(--gbf-panel);
-  --danger: var(--gbf-hp-enemy);
-  --ok: var(--gbf-hp);
-  --shadow: 0 6px 18px rgba(8, 50, 100, 0.22);
-  --radius: 10px;
+  /* legacy aliases used by older class names */
+  --gbf-blue: var(--ff-blue);
+  --gbf-blue-deep: var(--ff-navy);
+  --gbf-blue-mid: var(--ff-navy-mid);
+  --gbf-gold: var(--ff-gold);
+  --gbf-gold-dark: #c49820;
+  --gbf-panel: var(--ff-navy-mid);
+  --gbf-panel-edge: var(--ff-border-inner);
+  --gbf-ink: var(--ff-text);
+  --gbf-ink-soft: var(--ff-muted);
+  --gbf-hp: var(--ff-hp);
+  --gbf-hp-enemy: var(--ff-danger);
+  --gbf-charge: var(--ff-yellow);
 
-  color: var(--ink);
-  background: #6aaad0;
+  color: var(--ff-text);
+  background: #020814;
   font-family: var(--font-body);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -66,8 +71,14 @@ body,
 
 body {
   min-height: 100dvh;
-  color: var(--ink);
-  background: #5a9fc8;
+  color: var(--ff-text);
+  background:
+    radial-gradient(1px 1px at 12% 18%, #fff, transparent),
+    radial-gradient(1px 1px at 38% 42%, #cde, transparent),
+    radial-gradient(1.5px 1.5px at 72% 22%, #fff, transparent),
+    radial-gradient(1px 1px at 88% 68%, #9cf, transparent),
+    radial-gradient(1px 1px at 55% 78%, #fff, transparent),
+    linear-gradient(180deg, #020814 0%, #0a1840 45%, #061028 100%);
   overflow-x: hidden;
 }
 
@@ -77,12 +88,14 @@ body {
   max-width: 430px;
   margin: 0 auto;
   min-height: 100dvh;
-  background: #7eb9dc;
-  box-shadow: 0 0 40px rgba(0, 30, 60, 0.35);
+  background:
+    radial-gradient(ellipse 120% 60% at 50% -10%, rgba(40, 80, 160, 0.35), transparent 55%),
+    linear-gradient(180deg, #081430 0%, #0c1c48 40%, #081228 100%);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.65);
 }
 
 a {
-  color: var(--gbf-blue-deep);
+  color: var(--ff-yellow);
 }
 
 button,
@@ -91,74 +104,111 @@ select {
   font: inherit;
 }
 
-/* GBF-style buttons */
-.btn {
-  border: 2px solid var(--gbf-gold);
-  border-radius: 8px;
-  padding: 11px 18px;
-  font-family: var(--font-body);
-  font-size: 0.92rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  transition: filter 0.15s ease, transform 0.15s ease;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
-}
-
-.btn:hover:not(:disabled) {
-  filter: brightness(1.06);
-  transform: translateY(-1px);
-}
-
-.btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.btn.primary {
-  background: linear-gradient(180deg, #ffe9a0 0%, #e6c35c 42%, #b88920 100%);
-  color: #3b2a00;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), 0 4px 0 #8a6810;
-}
-
-.btn.secondary,
-.btn.azure {
-  background: linear-gradient(180deg, #7ec8f0 0%, #1a78c2 55%, #0d5ea8 100%);
-  color: #fff;
-  border-color: #b8e0ff;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 4px 0 #08457e;
-}
-
+/* Classic FF double-border window */
+.ff-window,
 .panel {
-  background: linear-gradient(180deg, #ffffff, #eef6fc);
-  border: 2px solid var(--gbf-panel-edge);
-  border-radius: 10px;
-  box-shadow: var(--shadow);
+  position: relative;
+  background: linear-gradient(180deg, var(--ff-navy-mid) 0%, var(--ff-navy) 100%);
+  border: 2px solid var(--ff-border);
+  box-shadow:
+    inset 0 0 0 2px var(--ff-navy-deep),
+    inset 0 0 0 4px var(--ff-border-inner),
+    var(--shadow);
+  border-radius: 0;
+  color: var(--ff-text);
+  padding: 12px 14px;
 }
 
+.ff-page {
+  padding: 12px 12px 88px;
+  display: grid;
+  gap: 12px;
+}
+
+.ff-page .page-head h1,
 .page-header h1,
 .gbf-ph h1 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.35rem;
-  letter-spacing: 0.08em;
-  color: #fff;
-  text-shadow: 0 2px 0 rgba(0, 40, 80, 0.35);
+  font-size: 1.2rem;
+  letter-spacing: 0.14em;
+  color: var(--ff-yellow);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+}
+
+.ff-page .page-head p,
+.gbf-ph p {
+  margin: 6px 0 0;
+  color: var(--ff-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
 .gbf-ph {
-  background: linear-gradient(180deg, var(--gbf-blue-mid), var(--gbf-blue-deep));
-  border-bottom: 3px solid var(--gbf-gold);
+  background: linear-gradient(180deg, var(--ff-navy-mid), var(--ff-navy));
+  border: 2px solid #fff;
+  box-shadow: inset 0 0 0 3px var(--ff-border-inner);
   padding: 12px 14px !important;
-  margin: 0 -0px 0;
+  margin: 0;
   color: #fff;
 }
 
-.gbf-ph p {
-  margin: 4px 0 0;
-  color: #d6ecff;
-  font-size: 0.78rem;
+.ff-sec {
+  margin: 4px 2px 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: var(--ff-yellow);
+  font-family: var(--font-display);
+}
+
+.ff-cursor,
+.ff-cursor-line::before {
+  color: var(--ff-yellow);
+  animation: cursor-blink 0.9s steps(1) infinite;
+}
+
+.ff-cursor-line::before {
+  content: '▶ ';
+}
+
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.btn {
+  border: 2px solid #fff;
+  border-radius: 0;
+  padding: 11px 18px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.15s ease;
+  box-shadow: inset 0 0 0 2px rgba(142, 180, 255, 0.55);
+}
+
+.btn:hover:not(:disabled) {
+  filter: brightness(1.12);
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn.primary {
+  background: linear-gradient(180deg, #2a5ab8 0%, #12306a 100%);
+  color: var(--ff-yellow);
+}
+
+.btn.secondary,
+.btn.azure {
+  background: linear-gradient(180deg, #1e3f88 0%, #0a1a48 100%);
+  color: #fff;
 }
 
 .char-grid {
@@ -194,5 +244,15 @@ select {
   }
   100% {
     background-position: 200% 50%;
+  }
+}
+
+@keyframes star-twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
   }
 }

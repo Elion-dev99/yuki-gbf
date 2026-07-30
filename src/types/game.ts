@@ -187,6 +187,8 @@ export interface BattleState {
   /** メイン召喚石 defId */
   mainSummonId: string | null
   summonUsed: boolean
+  /** GMゴッドモード（被ダメ無効・与ダメ極大） */
+  godMode?: boolean
 }
 
 export const ELEMENT_LABEL: Record<Element, string> = {

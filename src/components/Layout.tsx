@@ -1,13 +1,14 @@
 import { NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useGm } from '../context/GmContext'
 import { migrateProfile } from '../lib/gameLogic'
 import './Layout.css'
 
 const NAV = [
-  { path: '/home', label: 'マイページ', icon: 'home' },
+  { path: '/home', label: 'ホーム', icon: 'home' },
   { path: '/quests', label: 'クエスト', icon: 'quest' },
-  { path: '/party', label: '編成', icon: 'party' },
-  { path: '/summon', label: 'ガチャ', icon: 'summon' },
+  { path: '/party', label: 'パーティ', icon: 'party' },
+  { path: '/summon', label: '召喚', icon: 'summon' },
   { path: '/characters', label: 'リスト', icon: 'list' },
 ]
 
@@ -31,23 +32,27 @@ export function RequireAuth() {
 
 export function AppShell() {
   const { profile, logout, firebaseReady, updateProfile } = useAuth()
+  const { gmEnabled } = useGm()
   const navigate = useNavigate()
   const location = useLocation()
   const p = profile ? migrateProfile(profile) : null
   const hideChrome = location.pathname.startsWith('/battle/')
+  const navItems = gmEnabled
+    ? [...NAV.slice(0, 4), { path: '/gm', label: 'GM', icon: 'gm' }, NAV[4]]
+    : NAV
 
   return (
-    <div className={`shell gbf-shell ${hideChrome ? 'battle-mode' : ''}`}>
+    <div className={`shell ff-shell ${hideChrome ? 'battle-mode' : ''}`}>
       {!hideChrome && (
-        <header className="gbf-topbar">
-          <button type="button" className="gbf-rank" onClick={() => navigate('/home')}>
+        <header className="ff-topbar">
+          <button type="button" className="ff-rank" onClick={() => navigate('/home')}>
             <span className="rank-ring">
-              <span className="rank-label">RANK</span>
+              <span className="rank-label">LV</span>
               <strong>{p?.rank ?? 1}</strong>
             </span>
           </button>
 
-          <div className="gbf-gauges">
+          <div className="ff-gauges">
             <div className="gauge ap">
               <span className="g-label">AP</span>
               <div className="g-track">
@@ -68,7 +73,7 @@ export function AppShell() {
             </div>
           </div>
 
-          <div className="gbf-currency">
+          <div className="ff-currency">
             <span className="rupie">
               <i className="coin" />
               {p?.rupies ?? 0}
@@ -79,9 +84,19 @@ export function AppShell() {
             </span>
           </div>
 
+          {gmEnabled && (
+            <button
+              type="button"
+              className="ff-icon-btn gm"
+              title="GM"
+              onClick={() => navigate('/gm')}
+            >
+              GM
+            </button>
+          )}
           <button
             type="button"
-            className="gbf-icon-btn"
+            className="ff-icon-btn"
             title="AP/EP全回復"
             onClick={async () => {
               if (p) await updateProfile(migrateProfile({ ...p, ap: p.maxAp, bp: p.maxBp }))
@@ -91,7 +106,7 @@ export function AppShell() {
           </button>
           <button
             type="button"
-            className="gbf-icon-btn logout"
+            className="ff-icon-btn logout"
             title="ログアウト"
             onClick={async () => {
               await logout()
@@ -106,14 +121,18 @@ export function AppShell() {
       {!firebaseReady && !hideChrome && (
         <div className="demo-banner">デモモード（ローカル保存）</div>
       )}
+      {gmEnabled && !hideChrome && <div className="gm-banner">GM MODE</div>}
 
       <main className={`shell-main ${hideChrome ? 'full' : ''}`}>
         <Outlet />
       </main>
 
       {!hideChrome && (
-        <nav className="gbf-bottom-nav" aria-label="メインメニュー">
-          {NAV.map((item) => (
+        <nav
+          className={`ff-bottom-nav ${gmEnabled ? 'with-gm' : ''}`}
+          aria-label="メインメニュー"
+        >
+          {navItems.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}

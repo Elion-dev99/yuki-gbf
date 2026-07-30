@@ -46,8 +46,8 @@ export function SummonPage() {
 
       <div className={`summon-stage ${spinning ? 'spinning' : ''}`}>
         <div className="banner">
-          <p className="banner-title">蒼穹フェス</p>
-          <p className="banner-sub">SSR出現率アップ（デモ）</p>
+          <p className="banner-title">星晶召喚</p>
+          <p className="banner-sub">運命の仲間を呼べ</p>
         </div>
         <div className="summon-orb" />
         <p className="summon-cost">
