@@ -50,7 +50,7 @@ npx -y firebase-tools@latest deploy --only firestore:rules
 
 公開 URL: **https://gbf.elion-dev08.workers.dev/**
 
-`master` / `main` への push で [`.github/workflows/deploy-cloudflare-pages.yml`](.github/workflows/deploy-cloudflare-pages.yml) がビルドし、Worker 名 `gbf` へ `wrangler deploy` します。
+`master` / `main` への push で [`.github/workflows/deploy-cloudflare-workers.yml`](.github/workflows/deploy-cloudflare-workers.yml) がビルドし、Worker 名 `gbf` へ `wrangler deploy` します。
 
 #### GitHub Secrets
 
