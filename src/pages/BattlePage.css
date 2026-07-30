@@ -1,6 +1,6 @@
 .battle-page {
   display: grid;
-  gap: 18px;
+  gap: 14px;
 }
 
 .battle-page.flash .battlefield {
@@ -17,29 +17,54 @@
 .battle-header h1 {
   margin: 4px 0 0;
   font-family: var(--font-display);
-  font-size: 1.4rem;
-  letter-spacing: 0.06em;
+  font-size: 1.45rem;
+  letter-spacing: 0.05em;
 }
 
 .retreat {
-  background: transparent;
-  border: 1px solid rgba(255, 140, 140, 0.4);
-  color: #ffb4b4;
-  padding: 8px 12px;
-  border-radius: 6px;
+  background: #fff;
+  border: 1.5px solid rgba(217, 74, 74, 0.45);
+  color: var(--danger);
+  padding: 8px 14px;
+  border-radius: 999px;
   cursor: pointer;
+  font-weight: 700;
 }
 
 .battlefield {
   display: grid;
-  gap: 16px;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 2px solid rgba(126, 182, 216, 0.5);
+  background:
+    radial-gradient(ellipse 60% 40% at 70% 15%, rgba(255, 246, 200, 0.7), transparent 60%),
+    linear-gradient(180deg, #7ebce8 0%, #c5e8f8 48%, #e8f6e8 78%, #d8ecc0 100%);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.battlefield::before {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 28%;
+  background: linear-gradient(180deg, transparent, rgba(90, 140, 70, 0.2));
+  pointer-events: none;
+}
+
+.side {
+  position: relative;
+  z-index: 1;
 }
 
 .side h2 {
   margin: 0 0 8px;
-  font-size: 0.8rem;
-  letter-spacing: 0.14em;
-  color: #7ed6ff;
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  color: var(--azure-deep);
+  font-weight: 700;
 }
 
 .fighter {
@@ -47,31 +72,32 @@
   text-align: left;
   margin-bottom: 8px;
   padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(126, 214, 255, 0.3);
-  background: rgba(10, 24, 42, 0.75);
-  color: #e8f6ff;
+  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  background: rgba(255, 252, 248, 0.88);
+  color: var(--ink);
   cursor: pointer;
+  box-shadow: 0 4px 12px rgba(30, 70, 110, 0.12);
 }
 
 .fighter.enemy.targeted {
-  border-color: #ff7a7a;
-  box-shadow: 0 0 0 1px rgba(255, 122, 122, 0.4);
+  border-color: var(--danger);
+  box-shadow: 0 0 0 2px rgba(217, 74, 74, 0.25);
 }
 
 .fighter.ally.selected {
-  border-color: #7ed6ff;
-  box-shadow: 0 0 0 1px rgba(126, 214, 255, 0.5);
+  border-color: var(--azure);
+  box-shadow: 0 0 0 2px rgba(42, 134, 196, 0.25);
 }
 
 .fighter.boss {
-  border-color: #ffe08a;
-  background: linear-gradient(145deg, rgba(60, 40, 10, 0.5), rgba(10, 24, 42, 0.85));
+  border-color: var(--gold);
+  background: linear-gradient(145deg, #fff8dc, #fffaf4);
 }
 
 .fighter.down {
   opacity: 0.4;
-  filter: grayscale(0.6);
+  filter: grayscale(0.55);
 }
 
 .fighter-top {
@@ -79,49 +105,52 @@
   justify-content: space-between;
   gap: 8px;
   font-size: 0.88rem;
+  font-weight: 700;
   margin-bottom: 6px;
 }
 
 .hp-bar,
 .charge-bar {
-  height: 6px;
+  height: 8px;
   border-radius: 99px;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(30, 50, 80, 0.12);
   overflow: hidden;
 }
 
 .hp-bar div {
   height: 100%;
-  background: linear-gradient(90deg, #2ecc71, #7ed957);
+  background: linear-gradient(90deg, #3a9b5c, #7ed957);
   transition: width 0.35s ease;
 }
 
 .enemy .hp-bar div {
-  background: linear-gradient(90deg, #c0392b, #ff7a7a);
+  background: linear-gradient(90deg, #d94a4a, #ff8a70);
 }
 
 .charge-bar {
   margin-top: 4px;
-  height: 4px;
+  height: 5px;
 }
 
 .charge-bar div {
   height: 100%;
-  background: linear-gradient(90deg, #1e6fa8, #ffe08a);
+  background: linear-gradient(90deg, #2a86c4, #f0d078);
   transition: width 0.35s ease;
 }
 
 .actions {
   padding: 14px;
-  border-radius: 10px;
-  border: 1px solid rgba(126, 214, 255, 0.3);
-  background: rgba(8, 20, 36, 0.85);
+  border-radius: 16px;
+  border: 2px solid rgba(126, 182, 216, 0.5);
+  background: rgba(255, 252, 248, 0.92);
+  box-shadow: var(--shadow);
 }
 
 .acting {
   margin: 0 0 10px;
-  color: #9be2ff;
+  color: var(--azure-deep);
   font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .action-row,
@@ -136,13 +165,14 @@
 }
 
 .btn.charge {
-  background: linear-gradient(135deg, #8a6a10, #ffe08a);
-  color: #1a1400;
+  background: linear-gradient(180deg, #ffe08a, #c9971a);
+  color: #3a2a00;
   font-weight: 700;
-  border: none;
-  border-radius: 8px;
+  border: 2px solid #fff2c4;
+  border-radius: 999px;
   padding: 12px 18px;
   cursor: pointer;
+  box-shadow: 0 6px 16px rgba(180, 120, 20, 0.3);
 }
 
 .btn.charge:disabled {
@@ -151,12 +181,13 @@
 }
 
 .btn.skill {
-  background: rgba(30, 70, 110, 0.7);
-  color: #e8f6ff;
-  border: 1px solid rgba(126, 214, 255, 0.35);
-  border-radius: 8px;
+  background: linear-gradient(180deg, #ffffff, #dff1fc);
+  color: var(--azure-deep);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
   padding: 10px 14px;
   cursor: pointer;
+  font-weight: 700;
 }
 
 .btn.skill:disabled {
@@ -165,23 +196,25 @@
 
 .phase-msg {
   text-align: center;
-  color: #ffb4b4;
+  color: var(--danger);
   letter-spacing: 0.1em;
+  font-weight: 700;
 }
 
 .result-panel {
   text-align: center;
   padding: 24px;
-  border-radius: 12px;
-  border: 1px solid rgba(126, 217, 87, 0.4);
-  background: rgba(20, 50, 30, 0.45);
+  border-radius: 16px;
+  border: 2px solid rgba(58, 155, 92, 0.45);
+  background: linear-gradient(145deg, #eefaf1, #fffaf4);
   animation: title-rise 0.5s ease both;
+  box-shadow: var(--shadow);
 }
 
 .result-panel h2 {
   margin: 0 0 10px;
   font-family: var(--font-display);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
 }
 
 .result-panel .action-row {
@@ -191,18 +224,19 @@
 
 .log-panel {
   padding: 12px;
-  border-radius: 8px;
-  background: rgba(4, 10, 18, 0.7);
-  border: 1px solid rgba(126, 214, 255, 0.2);
-  max-height: 220px;
+  border-radius: 12px;
+  background: rgba(255, 252, 248, 0.88);
+  border: 2px solid rgba(126, 182, 216, 0.4);
+  max-height: 200px;
   overflow: auto;
 }
 
 .log-panel h2 {
   margin: 0 0 8px;
-  font-size: 0.8rem;
-  color: #7ed6ff;
-  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  color: var(--azure-deep);
+  letter-spacing: 0.12em;
+  font-weight: 700;
 }
 
 .log-panel ul {
@@ -214,22 +248,25 @@
 .log-panel li {
   font-size: 0.8rem;
   padding: 4px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  color: #b8d4e8;
+  border-bottom: 1px solid rgba(40, 90, 140, 0.08);
+  color: var(--ink-soft);
 }
 
 .log-panel .log-charge {
-  color: #ffe08a;
+  color: #9a7010;
+  font-weight: 700;
 }
 .log-panel .log-heal {
-  color: #7ed957;
+  color: var(--ok);
+  font-weight: 700;
 }
 .log-panel .log-victory {
-  color: #9be2ff;
+  color: var(--azure-deep);
   font-weight: 700;
 }
 .log-panel .log-defeat {
-  color: #ff9a9a;
+  color: var(--danger);
+  font-weight: 700;
 }
 
 @keyframes hit-flash {
@@ -237,7 +274,7 @@
     filter: brightness(1);
   }
   40% {
-    filter: brightness(1.35);
+    filter: brightness(1.25);
   }
   100% {
     filter: brightness(1);

@@ -1,35 +1,39 @@
 .quest-page {
   display: grid;
-  gap: 20px;
+  gap: 18px;
 }
 
 .warn {
-  padding: 12px;
-  background: rgba(180, 80, 40, 0.25);
-  border: 1px solid rgba(255, 160, 100, 0.35);
-  color: #ffd0b0;
-  border-radius: 8px;
+  padding: 12px 14px;
+  background: #fff0e8;
+  border: 2px solid rgba(232, 90, 60, 0.35);
+  color: #a83820;
+  border-radius: 12px;
+  font-weight: 700;
 }
 
 .quest-list {
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
 .quest-card {
   padding: 18px;
-  border-radius: 12px;
-  border: 1px solid rgba(126, 214, 255, 0.3);
-  background: linear-gradient(145deg, rgba(14, 32, 56, 0.9), rgba(8, 16, 28, 0.95));
-  animation: title-rise 0.45s ease both;
+  border-radius: 16px;
+  border: 2px solid rgba(126, 182, 216, 0.55);
+  background: rgba(255, 252, 248, 0.92);
+  box-shadow: var(--shadow);
+  animation: title-rise 0.4s ease both;
 }
 
 .quest-card.locked {
   opacity: 0.55;
+  filter: grayscale(0.25);
 }
 
 .quest-card.cleared {
-  border-color: rgba(126, 217, 87, 0.45);
+  border-color: rgba(58, 155, 92, 0.55);
+  background: linear-gradient(145deg, #eefaf1, #fffaf4);
 }
 
 .quest-meta {
@@ -40,37 +44,40 @@
 }
 
 .chapter {
-  font-size: 0.75rem;
-  letter-spacing: 0.12em;
-  color: #7ed6ff;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--azure-deep);
+  font-weight: 700;
 }
 
 .cleared-badge {
-  font-size: 0.68rem;
-  padding: 2px 6px;
-  background: #2a5a30;
-  color: #b8f0c0;
-  border-radius: 3px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  background: var(--ok);
+  color: #fff;
+  border-radius: 999px;
 }
 
 .quest-card h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  letter-spacing: 0.06em;
+  font-size: 1.35rem;
+  letter-spacing: 0.05em;
 }
 
 .quest-card p {
   margin: 8px 0 0;
-  color: #b8d4e8;
+  color: var(--ink-soft);
   font-size: 0.9rem;
   line-height: 1.5;
 }
 
 .rewards {
-  margin: 12px 0 16px;
+  margin: 12px 0 14px;
   font-size: 0.85rem;
-  color: #ffe08a;
+  font-weight: 700;
+  color: #9a7010;
 }
 
 .quest-card .btn {
