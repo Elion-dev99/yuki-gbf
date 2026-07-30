@@ -1,5 +1,11 @@
 {
-  "name": "azure-fantasia",
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "gbf",
   "compatibility_date": "2026-07-30",
-  "pages_build_output_dir": "./dist"
+  "workers_dev": true,
+  "preview_urls": true,
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
 }
