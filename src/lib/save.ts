@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth'
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { auth, db, isFirebaseConfigured } from './firebase'
-import { createDefaultProfile } from './gameLogic'
+import { createDefaultProfile, migrateProfile } from './gameLogic'
 import type { PlayerProfile } from '../types/game'
 
 const LOCAL_KEY = 'azure-fantasia-save'
@@ -27,16 +27,16 @@ export function getLocalUid(): string {
 export async function loadProfile(uid: string): Promise<PlayerProfile | null> {
   if (isFirebaseConfigured && db) {
     const snap = await getDoc(doc(db, 'players', uid))
-    if (snap.exists()) return snap.data() as PlayerProfile
+    if (snap.exists()) return migrateProfile(snap.data() as PlayerProfile)
     return null
   }
   const raw = localStorage.getItem(`${LOCAL_KEY}:${uid}`)
   if (!raw) return null
-  return JSON.parse(raw) as PlayerProfile
+  return migrateProfile(JSON.parse(raw) as PlayerProfile)
 }
 
 export async function saveProfile(uid: string, profile: PlayerProfile): Promise<void> {
-  const payload = { ...profile, updatedAt: Date.now() }
+  const payload = { ...migrateProfile(profile), updatedAt: Date.now() }
   if (isFirebaseConfigured && db) {
     await setDoc(doc(db, 'players', uid), payload, { merge: true })
     return
@@ -46,7 +46,11 @@ export async function saveProfile(uid: string, profile: PlayerProfile): Promise<
 
 export async function ensureProfile(user: User, displayName?: string): Promise<PlayerProfile> {
   const existing = await loadProfile(user.uid)
-  if (existing) return existing
+  if (existing) {
+    const migrated = migrateProfile(existing)
+    await saveProfile(user.uid, migrated)
+    return migrated
+  }
   const name = displayName || user.displayName || '騎空士'
   const profile = createDefaultProfile(name)
   await saveProfile(user.uid, profile)

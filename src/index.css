@@ -63,35 +63,13 @@ body {
   overflow-x: hidden;
 }
 
-/* Floating sky islands / clouds atmosphere */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 40% 18% at 12% 28%, rgba(255, 255, 255, 0.55), transparent 70%),
-    radial-gradient(ellipse 35% 14% at 78% 18%, rgba(255, 255, 255, 0.45), transparent 70%),
-    radial-gradient(ellipse 50% 20% at 55% 55%, rgba(255, 255, 255, 0.35), transparent 70%),
-    radial-gradient(ellipse 28% 10% at 30% 70%, rgba(90, 160, 106, 0.22), transparent 70%),
-    radial-gradient(ellipse 22% 8% at 82% 78%, rgba(90, 160, 106, 0.18), transparent 70%);
-  animation: cloud-drift 28s ease-in-out infinite alternate;
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: auto 0 0 0;
-  height: 18vh;
-  pointer-events: none;
-  z-index: 0;
-  background: linear-gradient(180deg, transparent, rgba(90, 140, 90, 0.12));
-}
-
 #root {
   position: relative;
   z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 a {

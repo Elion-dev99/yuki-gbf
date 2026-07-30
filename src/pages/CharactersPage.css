@@ -1,6 +1,7 @@
 .chars-page {
   display: grid;
   gap: 18px;
+  padding: 12px;
 }
 
 .filters {

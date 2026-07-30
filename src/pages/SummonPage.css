@@ -1,87 +1,94 @@
-.summon-page {
+.summon-gbf {
+  padding: 12px;
   display: grid;
-  gap: 20px;
+  gap: 14px;
 }
 
 .summon-stage {
   text-align: center;
-  padding: 36px 20px;
-  border-radius: 20px;
-  border: 2px solid rgba(201, 151, 26, 0.45);
+  padding: 20px 14px 24px;
+  border-radius: 16px;
+  border: 3px solid #c9971a;
   background:
-    radial-gradient(circle at 50% 30%, rgba(255, 230, 140, 0.55), transparent 55%),
-    linear-gradient(160deg, #fff8dc, #e8f4fc 55%, #fffaf4);
+    radial-gradient(circle at 50% 20%, rgba(255, 230, 140, 0.55), transparent 50%),
+    linear-gradient(160deg, #2a5080, #1a3058 50%, #0e2038);
+  color: #fff;
   box-shadow: var(--shadow);
-  position: relative;
-  overflow: hidden;
+}
+
+.banner {
+  margin-bottom: 14px;
+}
+
+.banner-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  letter-spacing: 0.12em;
+  color: #ffe08a;
+}
+
+.banner-sub {
+  margin: 4px 0 0;
+  font-size: 0.8rem;
+  opacity: 0.85;
 }
 
 .summon-orb {
   width: 96px;
   height: 96px;
-  margin: 0 auto 18px;
+  margin: 0 auto 14px;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 35% 30%, #fffce8, #f0d078 42%, #2a86c4 78%);
-  box-shadow: 0 0 36px rgba(240, 200, 80, 0.55), 0 10px 24px rgba(42, 134, 196, 0.25);
+  background: radial-gradient(circle at 35% 30%, #fffce8, #f0d078 40%, #6b5b95 78%);
   border: 3px solid #fff;
-  transition: transform 0.4s ease;
+  box-shadow: 0 0 36px rgba(240, 200, 80, 0.55);
 }
 
 .summon-stage.spinning .summon-orb {
-  animation: orb-spin 0.55s ease-in-out infinite;
+  animation: orb-spin 0.5s ease-in-out infinite;
 }
 
 .summon-cost {
-  color: #9a7010;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   font-weight: 700;
+  color: #ffe08a;
 }
 
 .summon-btns {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   justify-content: center;
 }
 
 .summon-msg {
-  margin: 16px 0 0;
+  margin: 14px 0 0;
   font-family: var(--font-display);
-  letter-spacing: 0.08em;
-  color: var(--ink);
-  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+  font-size: 1.1rem;
   animation: title-rise 0.4s ease both;
 }
 
 .summon-results h2,
 .rates h2 {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  letter-spacing: 0.05em;
+  font-size: 1.05rem;
 }
 
 .rates {
-  padding: 14px 16px;
-  border-radius: 14px;
-  background: rgba(255, 252, 248, 0.9);
-  border: 2px solid rgba(126, 182, 216, 0.4);
+  padding: 12px 14px;
 }
 
 .rates ul {
   margin: 0;
-  padding-left: 1.2rem;
+  padding-left: 1.1rem;
   color: var(--ink-soft);
   line-height: 1.7;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 @keyframes orb-spin {
-  0%,
-  100% {
-    transform: scale(1) rotate(0deg);
-  }
   50% {
     transform: scale(1.12) rotate(14deg);
   }

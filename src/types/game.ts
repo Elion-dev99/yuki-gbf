@@ -1,8 +1,17 @@
 export type Element = 'fire' | 'water' | 'earth' | 'wind' | 'light' | 'dark'
-
 export type CharClass = 'attack' | 'defense' | 'balance' | 'heal' | 'special'
-
 export type Rarity = 'N' | 'R' | 'SR' | 'SSR'
+export type WeaponType =
+  | 'sword'
+  | 'dagger'
+  | 'spear'
+  | 'axe'
+  | 'staff'
+  | 'gun'
+  | 'melee'
+  | 'bow'
+  | 'harp'
+  | 'katana'
 
 export interface SkillDef {
   id: string
@@ -13,6 +22,8 @@ export interface SkillDef {
   heal?: number
   buffAtk?: number
   buffDef?: number
+  /** 奥義ゲージ増加 */
+  chargeGain?: number
 }
 
 export interface CharacterDef {
@@ -27,6 +38,32 @@ export interface CharacterDef {
   skills: SkillDef[]
   chargeName: string
   chargePower: number
+  flavor: string
+}
+
+export interface WeaponDef {
+  id: string
+  name: string
+  element: Element
+  type: WeaponType
+  rarity: Rarity
+  atk: number
+  hp: number
+  skillName: string
+  skillBonus: number
+}
+
+export interface SummonDef {
+  id: string
+  name: string
+  element: Element
+  rarity: Rarity
+  atk: number
+  hp: number
+  callName: string
+  callPower: number
+  auraName: string
+  auraBonus: number
   flavor: string
 }
 
@@ -48,6 +85,8 @@ export interface QuestDef {
   enemies: string[]
   rewards: { rupies: number; crystals: number; exp: number }
   unlockRank: number
+  apCost: number
+  kind: 'story' | 'free' | 'raid'
 }
 
 export interface OwnedCharacter {
@@ -57,8 +96,25 @@ export interface OwnedCharacter {
   obtainedAt: number
 }
 
+export interface OwnedWeapon {
+  uid: string
+  defId: string
+  level: number
+}
+
+export interface OwnedSummon {
+  uid: string
+  defId: string
+  level: number
+}
+
 export interface PartyState {
+  /** 前衛4 */
   slots: (string | null)[]
+  /** 武器グリッド10（0=メイン） */
+  weapons: (string | null)[]
+  /** 召喚石 0=メイン + サブ4 */
+  summons: (string | null)[]
 }
 
 export interface PlayerProfile {
@@ -67,7 +123,13 @@ export interface PlayerProfile {
   exp: number
   rupies: number
   crystals: number
+  ap: number
+  maxAp: number
+  bp: number
+  maxBp: number
   characters: OwnedCharacter[]
+  weapons: OwnedWeapon[]
+  summons: OwnedSummon[]
   party: PartyState
   clearedQuests: string[]
   totalSummons: number
@@ -90,9 +152,19 @@ export interface BattleFighter {
   isBoss?: boolean
   atkBuff: number
   defBuff: number
+  /** 今ターンにセットしたアビリティ */
+  queuedSkillId: string | null
 }
 
-export type BattleLogKind = 'attack' | 'skill' | 'charge' | 'heal' | 'system' | 'victory' | 'defeat'
+export type BattleLogKind =
+  | 'attack'
+  | 'skill'
+  | 'charge'
+  | 'heal'
+  | 'summon'
+  | 'system'
+  | 'victory'
+  | 'defeat'
 
 export interface BattleLog {
   id: string
@@ -105,10 +177,16 @@ export interface BattleState {
   allies: BattleFighter[]
   enemies: BattleFighter[]
   turn: number
-  phase: 'player' | 'enemy' | 'won' | 'lost'
+  /** command=入力待ち / resolve=攻撃演出中扱いはUI / enemy / won / lost */
+  phase: 'command' | 'enemy' | 'won' | 'lost'
   logs: BattleLog[]
   selectedAlly: number
-  rewards?: QuestDef['rewards']
+  selectedEnemy: number
+  /** 召喚ゲージ 0-100 */
+  summonGauge: number
+  /** メイン召喚石 defId */
+  mainSummonId: string | null
+  summonUsed: boolean
 }
 
 export const ELEMENT_LABEL: Record<Element, string> = {
@@ -135,7 +213,20 @@ export const RARITY_LABEL: Record<Rarity, string> = {
   SSR: 'SSR',
 }
 
-/** Advantage: fire > wind > earth > water > fire; light <> dark */
+export const WEAPON_LABEL: Record<WeaponType, string> = {
+  sword: '剣',
+  dagger: '短剣',
+  spear: '槍',
+  axe: '斧',
+  staff: '杖',
+  gun: '銃',
+  melee: '格闘',
+  bow: '弓',
+  harp: '楽器',
+  katana: '刀',
+}
+
+/** 火>風>土>水>火 / 光⇔闇 */
 export function elementMultiplier(attacker: Element, defender: Element): number {
   const cycle: Record<string, Element> = {
     fire: 'wind',
@@ -153,3 +244,7 @@ export function elementMultiplier(attacker: Element, defender: Element): number 
   }
   return 1
 }
+
+export const MAX_AP = 75
+export const MAX_BP = 5
+export const CHARGE_MAX = 100
