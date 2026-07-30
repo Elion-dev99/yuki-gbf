@@ -46,22 +46,40 @@ npx -y firebase-tools@latest use <YOUR_PROJECT_ID>
 npx -y firebase-tools@latest deploy --only firestore:rules
 ```
 
-### Cloudflare Pages
+### Cloudflare Pages（GitHub Actions 自動デプロイ）
+
+`master` / `main` への push、および PR 作成時に [`.github/workflows/deploy-cloudflare-pages.yml`](.github/workflows/deploy-cloudflare-pages.yml) がビルドして Cloudflare Pages へデプロイします。
+
+#### 1. API トークンを作成
+
+1. [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens) → **Create Token**
+2. テンプレート **Edit Cloudflare Workers** を使うか、次の権限を付与:
+   - Account → Cloudflare Pages → Edit
+   - Account → Account Settings → Read（Account ID 確認用）
+3. Account リソースで対象アカウントを選択
+
+#### 2. GitHub Secrets を設定
+
+リポジトリ → **Settings** → **Secrets and variables** → **Actions** に追加:
+
+| Secret | 内容 |
+|--------|------|
+| `CLOUDFLARE_API_TOKEN` | 上記で作成した API トークン |
+| `CLOUDFLARE_ACCOUNT_ID` | ダッシュボード右サイドバー / Workers 概要の Account ID |
+| `VITE_FIREBASE_*` | （任意）Firebase Web 設定。未設定でもゲストデモは動作 |
+
+#### 3. Pages プロジェクト
+
+初回デプロイで `azure-fantasia` プロジェクトが作成されます。手動で先に作る場合:
 
 ```bash
 npm run build
+npx wrangler pages project create azure-fantasia
 npx wrangler pages deploy dist --project-name=azure-fantasia
 ```
 
-または Git 連携:
-
-| 項目 | 値 |
-|------|-----|
-| Build command | `npm run build` |
-| Build output directory | `dist` |
-| Root directory | `/` |
-
-Pages の Environment Variables に `VITE_FIREBASE_*` を設定してください。
+- **production**: `master` / `main` への push
+- **preview**: Pull Request ごと（プレビュー URL 付き）
 
 ## スクリプト
 
