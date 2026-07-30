@@ -1,0 +1,153 @@
+.char-card {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border: 1px solid rgba(126, 214, 255, 0.35);
+  background: linear-gradient(160deg, rgba(12, 28, 48, 0.9), rgba(8, 16, 30, 0.95));
+  color: #e8f6ff;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  animation: card-in 0.45s ease both;
+}
+
+.char-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0, 40, 80, 0.45);
+}
+
+.char-card.selected {
+  border-color: #ffe08a;
+  box-shadow: 0 0 0 2px rgba(255, 224, 138, 0.45);
+}
+
+.char-card-art {
+  height: 96px;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 120%, rgba(255, 255, 255, 0.18), transparent 55%),
+    linear-gradient(145deg, rgba(30, 80, 120, 0.5), rgba(8, 20, 40, 0.8));
+}
+
+.char-card.fire .char-card-art {
+  background: linear-gradient(145deg, #6a2030, #1a1018);
+}
+.char-card.water .char-card-art {
+  background: linear-gradient(145deg, #1a4a7a, #0a1828);
+}
+.char-card.earth .char-card-art {
+  background: linear-gradient(145deg, #5a4030, #1a1410);
+}
+.char-card.wind .char-card-art {
+  background: linear-gradient(145deg, #2a5a38, #0e1a14);
+}
+.char-card.light .char-card-art {
+  background: linear-gradient(145deg, #6a5a28, #1a1810);
+}
+.char-card.dark .char-card-art {
+  background: linear-gradient(145deg, #3a2858, #100818);
+}
+
+.glyph {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  opacity: 0.85;
+  letter-spacing: 0.1em;
+}
+
+.char-card.fire {
+  border-color: #ff7a7a;
+}
+.char-card.water {
+  border-color: #5bb8ff;
+}
+.char-card.earth {
+  border-color: #c9a063;
+}
+.char-card.wind {
+  border-color: #7ed957;
+}
+.char-card.light {
+  border-color: #ffe066;
+}
+.char-card.dark {
+  border-color: #b084f5;
+}
+
+.char-card-body {
+  padding: 10px 12px 14px;
+}
+
+.char-card-top {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.rarity-badge,
+.el-badge {
+  font-size: 0.68rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.r-ssr {
+  background: linear-gradient(90deg, #c9a227, #f0e6a8);
+  color: #2a2000;
+  border: none;
+}
+.r-sr {
+  background: #5a3d8a;
+  color: #f0e8ff;
+}
+.r-r {
+  background: #2a5080;
+  color: #d8ecff;
+}
+.r-n {
+  background: #3a3a3a;
+  color: #ddd;
+}
+
+.char-card h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.meta {
+  margin: 4px 0 0;
+  font-size: 0.78rem;
+  color: #9ec8e0;
+}
+
+.flavor {
+  margin: 8px 0 0;
+  font-size: 0.75rem;
+  color: #b8d4e8;
+  line-height: 1.45;
+}
+
+.char-card.compact .char-card-art {
+  height: 64px;
+}
+
+.char-card.compact h3 {
+  font-size: 0.95rem;
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

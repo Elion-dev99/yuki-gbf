@@ -1,0 +1,113 @@
+.home-page {
+  display: grid;
+  gap: 28px;
+}
+
+.home-hero {
+  padding: 8px 0 4px;
+  animation: title-rise 0.6s ease both;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  color: #7ed6ff;
+}
+
+.home-hero h1 {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  letter-spacing: 0.08em;
+}
+
+.sub {
+  margin: 8px 0 0;
+  color: #9ec8e0;
+  font-size: 0.95rem;
+}
+
+.home-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.action-tile {
+  text-align: left;
+  padding: 20px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(126, 214, 255, 0.3);
+  cursor: pointer;
+  color: #e8f6ff;
+  background: linear-gradient(145deg, rgba(18, 40, 68, 0.85), rgba(8, 16, 30, 0.9));
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  animation: title-rise 0.55s ease both;
+}
+
+.action-tile:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.action-tile:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.action-tile:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.action-tile:nth-child(4) {
+  animation-delay: 0.2s;
+}
+
+.action-tile:hover {
+  transform: translateY(-3px);
+  border-color: #7ed6ff;
+}
+
+.action-tile.quest {
+  background: linear-gradient(145deg, rgba(40, 70, 40, 0.5), rgba(8, 16, 30, 0.9));
+}
+.action-tile.summon {
+  background: linear-gradient(145deg, rgba(70, 50, 20, 0.45), rgba(8, 16, 30, 0.9));
+}
+
+.tile-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+}
+
+.tile-desc {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.85rem;
+  color: #9ec8e0;
+}
+
+.home-tip {
+  padding: 18px;
+  border-left: 3px solid #7ed6ff;
+  background: rgba(10, 24, 42, 0.55);
+}
+
+.home-tip h2 {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.06em;
+}
+
+.home-tip ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  color: #c5e4f5;
+  line-height: 1.7;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 520px) {
+  .home-actions {
+    grid-template-columns: 1fr;
+  }
+}
