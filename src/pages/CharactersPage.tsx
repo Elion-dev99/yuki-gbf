@@ -30,11 +30,13 @@ export function CharactersPage() {
 
   return (
     <div className="chars-page">
-      <header className="page-header">
-        <h1>キャラクター</h1>
-        <p>
-          所持 {profile.characters.length} / {CHARACTERS.length}
-        </p>
+      <header className="page-header gbf-ph">
+        <div>
+          <h1>キャラリスト</h1>
+          <p>
+            所持 {profile.characters.length} / {CHARACTERS.length}
+          </p>
+        </div>
       </header>
 
       <div className="filters">

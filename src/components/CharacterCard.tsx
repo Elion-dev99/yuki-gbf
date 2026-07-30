@@ -3,7 +3,7 @@ import { CLASS_LABEL, ELEMENT_LABEL, RARITY_LABEL } from '../types/game'
 import './CharacterCard.css'
 
 const ELEMENT_GLYPH: Record<Element, string> = {
-  fire: '炎',
+  fire: '火',
   water: '水',
   earth: '土',
   wind: '風',
@@ -32,7 +32,6 @@ export function CharacterCard({ def, owned, selected, onClick, compact }: Props)
             <span className="hair" />
             <span className="face" />
             <span className="cloak" />
-            <span className="glow" />
           </div>
           <span className="el-seal">{ELEMENT_GLYPH[def.element]}</span>
         </div>

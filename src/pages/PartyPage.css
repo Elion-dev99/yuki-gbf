@@ -1,73 +1,186 @@
-.party-page {
+.party-gbf {
+  min-height: calc(100dvh - 140px);
   display: grid;
-  gap: 20px;
+  gap: 0;
+  padding-bottom: 88px;
+  background: transparent;
 }
 
-.party-slots {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+.party-gbf .gbf-ph {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 10px 0;
 }
 
-.slot {
+.party-gbf .tabs,
+.party-gbf .front-row,
+.party-gbf .grid-10,
+.party-gbf .summon-row,
+.party-gbf .picker {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.tabs {
   display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  margin-top: 10px !important;
+}
+
+.tabs button {
+  padding: 10px 8px;
+  border: 2px solid #fff;
+  border-bottom: none;
+  background: #061030;
+  font-weight: 700;
+  cursor: pointer;
+  color: #a8b8e0;
+}
+
+.tabs button.active {
+  background: linear-gradient(180deg, #12306a, #0a1a48);
+  color: #ffe566;
+  box-shadow: inset 0 0 0 2px #8eb4ff;
+  z-index: 1;
+}
+
+.front-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  padding: 12px;
-  border-radius: 16px;
-  border: 2px dashed rgba(126, 182, 216, 0.55);
-  background: rgba(255, 255, 255, 0.55);
+  margin-top: 12px;
 }
 
-.slot.active {
-  border-style: solid;
-  border-color: var(--gold);
-  background: rgba(255, 248, 220, 0.75);
+.front-slot {
+  display: grid;
+  gap: 4px;
 }
 
-.slot-num {
+.front-slot .pos {
+  font-size: 0.62rem;
+  color: #8eb4ff;
+  letter-spacing: 0.08em;
+}
+
+.front-slot.active {
+  outline: 1px solid #ffe566;
+  outline-offset: 2px;
+}
+
+.front-slot .empty,
+.front-slot .clear,
+.picker .clear {
+  border: 2px solid #fff;
+  background: #0a1a48;
+  color: #c8d8ff;
+  padding: 8px;
+  cursor: pointer;
   font-size: 0.72rem;
-  color: var(--azure-deep);
-  letter-spacing: 0.12em;
   font-weight: 700;
 }
 
-.empty-slot {
-  min-height: 120px;
-  border: 2px dashed rgba(126, 182, 216, 0.55);
-  background: rgba(255, 255, 255, 0.7);
-  color: var(--ink-soft);
-  border-radius: 12px;
+.front-slot .empty {
+  min-height: 100px;
+  color: #8eb4ff;
+  box-shadow: inset 0 0 0 2px #8eb4ff;
+}
+
+.grid-10,
+.summon-row {
+  display: grid;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.grid-10 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.summon-row {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.eq-slot {
+  min-height: 78px;
+  border: 2px solid #fff;
+  background: #0a1a48;
+  box-shadow: inset 0 0 0 2px #8eb4ff;
+  color: #fff;
   cursor: pointer;
-  font-weight: 700;
-}
-
-.clear-btn {
-  background: #fff;
-  border: 1.5px solid rgba(217, 74, 74, 0.4);
-  color: var(--danger);
   padding: 6px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.65rem;
+  text-align: left;
+  display: grid;
+  align-content: start;
+  gap: 2px;
+}
+
+.eq-slot.main {
+  box-shadow:
+    inset 0 0 0 2px #061030,
+    inset 0 0 0 4px #ffe566;
+}
+
+.eq-slot.active {
+  border-color: #ffe566;
+  color: #ffe566;
+}
+
+.eq-pos {
+  color: #8eb4ff;
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+}
+
+.eq-slot strong {
+  color: #ffe566;
+  font-size: 0.7rem;
+}
+
+.eq-slot small,
+.empty-t {
+  color: #a8b8e0;
 }
 
 .picker {
-  padding: 16px;
-  border-radius: 16px;
-  background: rgba(255, 252, 248, 0.9);
-  border: 2px solid rgba(126, 182, 216, 0.45);
-  box-shadow: var(--shadow);
+  margin-top: 12px;
+  margin-bottom: 20px;
 }
 
 .picker h2 {
-  margin: 0 0 12px;
+  margin: 0 0 10px;
+  color: #ffe566;
+  font-size: 0.9rem;
   font-family: var(--font-display);
-  font-size: 1.15rem;
+  letter-spacing: 0.08em;
 }
 
-@media (max-width: 520px) {
-  .party-slots {
-    grid-template-columns: 1fr;
-  }
+.eq-list {
+  display: grid;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.eq-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  text-align: left;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  background: #061030;
+  color: #fff;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.eq-row:hover {
+  border-color: #ffe566;
+  color: #ffe566;
+}
+
+.eq-row span {
+  color: #a8b8e0;
+  font-size: 0.72rem;
 }

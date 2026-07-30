@@ -1,22 +1,28 @@
-import { NavLink, Navigate, Outlet, useNavigate } from 'react-router-dom'
+import { NavLink, Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useGm } from '../context/GmContext'
+import { migrateProfile } from '../lib/gameLogic'
 import './Layout.css'
 
 const NAV = [
-  { path: '/home', label: 'ホーム', icon: '⌂' },
-  { path: '/party', label: '編成', icon: '⚔' },
-  { path: '/characters', label: 'キャラ', icon: '✦' },
-  { path: '/quests', label: 'クエスト', icon: '⚑' },
-  { path: '/summon', label: '召喚', icon: '✧' },
+  { path: '/home', label: 'ホーム', icon: 'home' },
+  { path: '/quests', label: 'クエスト', icon: 'quest' },
+  { path: '/party', label: 'パーティ', icon: 'party' },
+  { path: '/summon', label: '召喚', icon: 'summon' },
+  { path: '/characters', label: 'リスト', icon: 'list' },
 ]
+
+function NavIcon({ type }: { type: string }) {
+  return <i className={`gicon gicon-${type}`} aria-hidden />
+}
 
 export function RequireAuth() {
   const { user, loading } = useAuth()
   if (loading) {
     return (
       <div className="boot-screen">
-        <div className="boot-airship" aria-hidden />
-        <p>蒼穹へ接続中…</p>
+        <div className="boot-ring" />
+        <p>Now Loading...</p>
       </div>
     )
   }
@@ -25,69 +31,121 @@ export function RequireAuth() {
 }
 
 export function AppShell() {
-  const { profile, logout, firebaseReady } = useAuth()
+  const { profile, logout, firebaseReady, updateProfile } = useAuth()
+  const { gmEnabled } = useGm()
   const navigate = useNavigate()
+  const location = useLocation()
+  const p = profile ? migrateProfile(profile) : null
+  const hideChrome = location.pathname.startsWith('/battle/')
+  const navItems = gmEnabled
+    ? [...NAV.slice(0, 4), { path: '/gm', label: 'GM', icon: 'gm' }, NAV[4]]
+    : NAV
 
   return (
-    <div className="shell">
-      <header className="topbar">
-        <button type="button" className="brand" onClick={() => navigate('/home')}>
-          <span className="brand-mark" aria-hidden>
-            <span className="brand-wing" />
-          </span>
-          <span className="brand-text">
-            <span className="brand-name">蒼穹ファンタジア</span>
-            <span className="brand-sub">AZURE FANTASIA</span>
-          </span>
-        </button>
+    <div className={`shell ff-shell ${hideChrome ? 'battle-mode' : ''}`}>
+      {!hideChrome && (
+        <header className="ff-topbar">
+          <button type="button" className="ff-rank" onClick={() => navigate('/home')}>
+            <span className="rank-ring">
+              <span className="rank-label">LV</span>
+              <strong>{p?.rank ?? 1}</strong>
+            </span>
+          </button>
 
-        {profile && (
-          <div className="resources">
-            <span className="res rank">
-              <em>RANK</em> {profile.rank}
+          <div className="ff-gauges">
+            <div className="gauge ap">
+              <span className="g-label">AP</span>
+              <div className="g-track">
+                <div className="g-fill" style={{ width: `${p ? (p.ap / p.maxAp) * 100 : 0}%` }} />
+              </div>
+              <span className="g-val">
+                {p?.ap ?? 0}/{p?.maxAp ?? 75}
+              </span>
+            </div>
+            <div className="gauge bp">
+              <span className="g-label">EP</span>
+              <div className="g-track">
+                <div className="g-fill" style={{ width: `${p ? (p.bp / p.maxBp) * 100 : 0}%` }} />
+              </div>
+              <span className="g-val">
+                {p?.bp ?? 0}/{p?.maxBp ?? 5}
+              </span>
+            </div>
+          </div>
+
+          <div className="ff-currency">
+            <span className="rupie">
+              <i className="coin" />
+              {p?.rupies ?? 0}
             </span>
-            <span className="res crystals" title="結晶">
-              <i className="ico crystal" />
-              {profile.crystals}
-            </span>
-            <span className="res rupies" title="ルピー">
-              <i className="ico rupie" />
-              {profile.rupies}
+            <span className="crystal">
+              <i className="gem" />
+              {p?.crystals ?? 0}
             </span>
           </div>
-        )}
 
-        <button
-          type="button"
-          className="logout-btn"
-          aria-label="ログアウト"
-          onClick={async () => {
-            await logout()
-            navigate('/')
-          }}
-        >
-          退出
-        </button>
-      </header>
-
-      {!firebaseReady && (
-        <div className="demo-banner">デモモード（ローカル保存）— Firebase 設定でクラウド同期できます</div>
+          {gmEnabled && (
+            <button
+              type="button"
+              className="ff-icon-btn gm"
+              title="GM"
+              onClick={() => navigate('/gm')}
+            >
+              GM
+            </button>
+          )}
+          <button
+            type="button"
+            className="ff-icon-btn"
+            title="AP/EP全回復"
+            onClick={async () => {
+              if (p) await updateProfile(migrateProfile({ ...p, ap: p.maxAp, bp: p.maxBp }))
+            }}
+          >
+            ＋
+          </button>
+          <button
+            type="button"
+            className="ff-icon-btn logout"
+            title="ログアウト"
+            onClick={async () => {
+              await logout()
+              navigate('/')
+            }}
+          >
+            ×
+          </button>
+        </header>
       )}
 
-      <main className="shell-main">
+      {!firebaseReady && !hideChrome && (
+        <div className="demo-banner">デモモード（ローカル保存）</div>
+      )}
+      {gmEnabled && !hideChrome && <div className="gm-banner">GM MODE</div>}
+
+      <main className={`shell-main ${hideChrome ? 'full' : ''}`}>
         <Outlet />
       </main>
 
-      <nav className="bottom-nav" aria-label="メインメニュー">
-        {NAV.map((item) => (
-          <NavLink key={item.path} to={item.path} className={({ isActive }) => (isActive ? 'active' : '')}>
-            <span className="nav-icon" aria-hidden>
-              {item.icon}
-            </span>
-            <span className="nav-label">{item.label}</span>
-          </NavLink>
-        ))}
-      </nav>
+      {!hideChrome && (
+        <nav
+          className={`ff-bottom-nav ${gmEnabled ? 'with-gm' : ''}`}
+          aria-label="メインメニュー"
+        >
+          {navItems.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) => (isActive ? 'active' : '')}
+            >
+              <span className="nav-badge">
+                <NavIcon type={item.icon} />
+              </span>
+              <span className="nav-label">{item.label}</span>
+            </NavLink>
+          ))}
+        </nav>
+      )}
     </div>
   )
 }
