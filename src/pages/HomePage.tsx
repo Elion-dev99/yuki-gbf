@@ -13,9 +13,7 @@ export function HomePage() {
   useEffect(() => {
     if (!profile) return
     const p = migrateProfile(profile)
-    if (p.ap < p.maxAp || p.bp < p.maxBp) {
-      void updateProfile(regenAp(p))
-    }
+    if (p.ap < p.maxAp || p.bp < p.maxBp) void updateProfile(regenAp(p))
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -29,44 +27,49 @@ export function HomePage() {
 
   return (
     <div className="mypage">
-      <div className="mypage-sky" aria-hidden>
+      <div className="mypage-world" aria-hidden>
+        <div className="sky-grad" />
+        <div className="cloud ca" />
+        <div className="cloud cb" />
+        <div className="cloud cc" />
         <div className="sun" />
-        <div className="island" />
-        <div className="ship" />
-        <div className={`lead-portrait ${lead?.element ?? 'light'}`}>
-          <span className="hair" />
-          <span className="face" />
-          <span className="cloak" />
+        <div className="island far" />
+        <div className="island near" />
+        <div className="airship" />
+        <div className={`hero-char ${lead?.element ?? 'light'}`}>
+          <div className="hc-glow" />
+          <div className="hc-body">
+            <span className="hc-hair" />
+            <span className="hc-face" />
+            <span className="hc-outfit" />
+          </div>
+          <div className="hc-nameplate">{lead?.name ?? '騎空士'}</div>
         </div>
       </div>
 
-      <div className="mypage-hud">
-        <div className="player-plate">
-          <p className="player-name">{p.displayName}</p>
-          <p className="player-meta">
-            Rank {p.rank}　騎空士　クリア {p.clearedQuests.length}
-          </p>
-        </div>
+      <aside className="mypage-side">
+        <button type="button" className="side-banner quest" onClick={() => navigate('/quests')}>
+          <em>QUEST</em>
+          <strong>クエスト</strong>
+          <small>{nextQuest ? nextQuest.name : 'クリア済'}</small>
+        </button>
+        <button type="button" className="side-banner party" onClick={() => navigate('/party')}>
+          <em>PARTY</em>
+          <strong>編成</strong>
+        </button>
+        <button type="button" className="side-banner gacha" onClick={() => navigate('/summon')}>
+          <em>GACHA</em>
+          <strong>ガチャ</strong>
+        </button>
+      </aside>
 
-        <div className="mypage-actions">
-          <button type="button" className="mp-btn quest" onClick={() => navigate('/quests')}>
-            <span>クエスト</span>
-            <small>{nextQuest ? nextQuest.name : '全ての物語をクリア'}</small>
-          </button>
-          <button type="button" className="mp-btn party" onClick={() => navigate('/party')}>
-            <span>編成</span>
-            <small>キャラ / 武器 / 召喚石</small>
-          </button>
-          <button type="button" className="mp-btn summon" onClick={() => navigate('/summon')}>
-            <span>レジェンドガチャ</span>
-            <small>結晶で仲間を召喚</small>
-          </button>
-          <button type="button" className="mp-btn list" onClick={() => navigate('/characters')}>
-            <span>キャラリスト</span>
-            <small>所持 {p.characters.length}</small>
-          </button>
+      <footer className="mypage-foot">
+        <div className="name-plate">
+          <span className="np-rank">Rank {p.rank}</span>
+          <strong>{p.displayName}</strong>
+          <span className="np-meta">騎空士 ID —</span>
         </div>
-      </div>
+      </footer>
     </div>
   )
 }

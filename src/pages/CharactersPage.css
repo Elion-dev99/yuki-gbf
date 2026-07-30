@@ -1,41 +1,48 @@
 .chars-page {
   display: grid;
-  gap: 18px;
+  gap: 12px;
   padding: 12px;
+  background: linear-gradient(180deg, #e3f2fd, #f7fbff);
+  min-height: calc(100dvh - 128px);
+}
+
+.chars-page .page-header h1 {
+  color: var(--gbf-blue-deep);
+  text-shadow: none;
 }
 
 .filters {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
-  padding: 12px;
-  border-radius: 14px;
-  background: rgba(255, 252, 248, 0.88);
-  border: 2px solid rgba(126, 182, 216, 0.45);
+  padding: 10px;
+  border-radius: 8px;
+  background: #fff;
+  border: 2px solid #90caf9;
 }
 
 .filters select {
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1.5px solid var(--line);
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 2px solid #64b5f6;
   background: #fff;
-  color: var(--ink);
-  font-weight: 700;
+  color: var(--gbf-ink);
+  font-weight: 800;
 }
 
 .check {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  color: var(--ink);
-  font-weight: 700;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--gbf-ink);
+  font-weight: 800;
 }
 
 .empty {
-  color: var(--ink-soft);
+  color: var(--gbf-ink-soft);
   text-align: center;
   padding: 40px 0;
-  font-weight: 700;
+  font-weight: 800;
 }

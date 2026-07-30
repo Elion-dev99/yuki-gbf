@@ -27,7 +27,7 @@ export function BattlePage() {
   const [error, setError] = useState('')
   const [rewardApplied, setRewardApplied] = useState(false)
   const [flash, setFlash] = useState(false)
-  const [abilOpen, setAbilOpen] = useState(false)
+  const [showAbil, setShowAbil] = useState(false)
 
   useEffect(() => {
     if (!profile || !quest) return
@@ -41,15 +41,18 @@ export function BattlePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questId])
 
+  const phase = battle?.phase
+  const turn = battle?.turn
+
   useEffect(() => {
-    if (!battle || battle.phase !== 'enemy') return
+    if (phase !== 'enemy') return
     const t = window.setTimeout(() => {
       setFlash(true)
       setBattle((prev) => (prev ? runEnemyTurn(prev) : prev))
       window.setTimeout(() => setFlash(false), 280)
     }, 700)
     return () => window.clearTimeout(t)
-  }, [battle?.phase, battle?.turn])
+  }, [phase, turn])
 
   useEffect(() => {
     async function give() {
@@ -66,189 +69,187 @@ export function BattlePage() {
     if (!selected) return []
     return CHARACTER_MAP[selected.defId]?.skills ?? []
   }, [selected])
-
   const summon = battle?.mainSummonId ? SUMMON_MAP[battle.mainSummonId] : null
 
   if (error) {
     return (
-      <div className="battle-gbf">
-        <p className="warn">{error}</p>
+      <div className="gbf-battle">
+        <p className="center-msg">{error}</p>
         <Link to="/party">編成へ</Link>
       </div>
     )
   }
   if (!quest || !battle) {
     return (
-      <div className="battle-gbf">
-        <p className="loading">Ready...</p>
+      <div className="gbf-battle">
+        <p className="center-msg">Ready...</p>
       </div>
     )
   }
 
   function act(fn: () => BattleState) {
     setFlash(true)
-    window.setTimeout(() => setFlash(false), 250)
+    window.setTimeout(() => setFlash(false), 220)
     setBattle(fn())
   }
 
   return (
-    <div className={`battle-gbf ${flash ? 'flash' : ''}`}>
-      <header className="btl-head">
-        <button type="button" className="retreat" onClick={() => navigate('/quests')}>
+    <div className={`gbf-battle ${flash ? 'flash' : ''}`}>
+      <div className="bb-bg" aria-hidden />
+
+      <header className="bb-top">
+        <button type="button" className="bb-retreat" onClick={() => navigate('/quests')}>
           撤退
         </button>
-        <div>
-          <p className="quest-name">{quest.name}</p>
-          <p className="turn">Turn {battle.turn}</p>
+        <div className="bb-title">
+          <strong>{quest.name}</strong>
+          <span>Turn {battle.turn}</span>
         </div>
+        <div className="bb-spacer" />
       </header>
 
-      <section className="btl-stage">
-        <div className="enemies">
-          {battle.enemies.map((e, i) => (
-            <button
-              key={e.uid}
-              type="button"
-              className={`foe ${e.hp <= 0 ? 'down' : ''} ${battle.selectedEnemy === i ? 'targeted' : ''} ${e.isBoss ? 'boss' : ''}`}
-              disabled={e.hp <= 0 || battle.phase !== 'command'}
-              onClick={() => setBattle(selectEnemy(battle, i))}
-            >
-              <div className="foe-art" data-el={e.element} />
-              <div className="foe-info">
-                <span>
-                  {e.name}
-                  <small> {ELEMENT_LABEL[e.element]}</small>
-                </span>
-                <div className="bar hp">
-                  <div style={{ width: `${(e.hp / e.maxHp) * 100}%` }} />
-                </div>
-                <span className="nums">
-                  {e.hp}/{e.maxHp}
-                </span>
-              </div>
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="btl-party">
-        {battle.allies.map((a, i) => (
+      <section className="bb-enemies">
+        {battle.enemies.map((e, i) => (
           <button
-            key={a.uid}
+            key={e.uid}
             type="button"
-            className={`member ${a.element} ${a.hp <= 0 ? 'down' : ''} ${battle.selectedAlly === i ? 'sel' : ''} ${a.queuedSkillId ? 'queued' : ''}`}
-            disabled={a.hp <= 0}
-            onClick={() => {
-              setBattle(selectAlly(battle, i))
-              setAbilOpen(true)
-            }}
+            className={`bb-foe ${e.isBoss ? 'boss' : ''} ${e.hp <= 0 ? 'down' : ''} ${battle.selectedEnemy === i ? 'on' : ''}`}
+            disabled={e.hp <= 0 || battle.phase !== 'command'}
+            onClick={() => setBattle(selectEnemy(battle, i))}
           >
-            <div className="mem-art">
-              <span className="face" />
+            <div className="bb-foe-art" data-el={e.element}>
+              <span className="el">{ELEMENT_LABEL[e.element]}</span>
             </div>
-            <div className="mem-bars">
-              <div className="bar hp">
-                <div style={{ width: `${(a.hp / a.maxHp) * 100}%` }} />
-              </div>
-              <div className="bar charge">
-                <div style={{ width: `${a.charge}%` }} />
-              </div>
+            <div className="bb-foe-hp">
+              <div style={{ width: `${(e.hp / e.maxHp) * 100}%` }} />
             </div>
-            <span className="mem-name">{a.name}</span>
-            {a.charge >= CHARGE_MAX && <span className="ougi-ready">奥義</span>}
+            <div className="bb-foe-meta">
+              <span>{e.name}</span>
+              <span>
+                {e.hp}/{e.maxHp}
+              </span>
+            </div>
           </button>
         ))}
       </section>
 
-      {battle.phase === 'command' && (
-        <section className="btl-command">
-          {abilOpen && selected && selected.hp > 0 && (
-            <div className="abil-panel">
-              <div className="abil-head">
-                <strong>{selected.name}</strong>
-                <button type="button" onClick={() => setAbilOpen(false)}>
-                  ×
-                </button>
-              </div>
-              <div className="abil-list">
-                {skills.map((s) => {
-                  const cd = selected.skillCds[s.id] ?? 0
-                  const queued = selected.queuedSkillId === s.id
-                  return (
-                    <button
-                      key={s.id}
-                      type="button"
-                      className={`abil ${queued ? 'on' : ''}`}
-                      disabled={cd > 0}
-                      onClick={() =>
-                        setBattle(toggleAbility(battle, battle.selectedAlly, s.id))
-                      }
-                    >
-                      <span>{s.name}</span>
-                      <small>{cd > 0 ? `CT${cd}` : s.description}</small>
-                    </button>
-                  )
-                })}
-              </div>
+      <div className="bb-dock">
+        {showAbil && selected && selected.hp > 0 && battle.phase === 'command' && (
+          <div className="bb-abils">
+            <div className="bb-abils-head">
+              <span>{selected.name} のアビリティ</span>
+              <button type="button" onClick={() => setShowAbil(false)}>
+                ×
+              </button>
             </div>
-          )}
+            {skills.map((s) => {
+              const cd = selected.skillCds[s.id] ?? 0
+              const on = selected.queuedSkillId === s.id
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  className={`bb-abil ${on ? 'on' : ''}`}
+                  disabled={cd > 0}
+                  onClick={() => setBattle(toggleAbility(battle, battle.selectedAlly, s.id))}
+                >
+                  <strong>{s.name}</strong>
+                  <small>{cd > 0 ? `再使用まで ${cd}` : s.description}</small>
+                </button>
+              )
+            })}
+          </div>
+        )}
 
-          <div className="cmd-row">
-            <button
-              type="button"
-              className="cmd summon"
-              disabled={battle.summonGauge < 100 || battle.summonUsed || !summon}
-              onClick={() => act(() => callSummon(battle))}
-              title={summon ? summon.callName : '召喚石なし'}
-            >
-              <span>召喚</span>
-              <div className="summon-gauge">
-                <div style={{ width: `${battle.summonGauge}%` }} />
-              </div>
-              <small>{summon?.name ?? '—'}</small>
-            </button>
+        <div className="bb-summons">
+          <button
+            type="button"
+            className="bb-summon-slot"
+            disabled={
+              battle.phase !== 'command' ||
+              battle.summonGauge < 100 ||
+              battle.summonUsed ||
+              !summon
+            }
+            onClick={() => act(() => callSummon(battle))}
+          >
+            <div className="ss-art" data-el={summon?.element ?? 'light'} />
+            <div className="ss-gauge">
+              <div style={{ width: `${battle.summonGauge}%` }} />
+            </div>
+            <span>{summon?.name ?? '召喚石なし'}</span>
+          </button>
+        </div>
 
+        <div className="bb-party-row">
+          {battle.allies.map((a, i) => (
             <button
+              key={a.uid}
               type="button"
-              className="cmd attack"
+              className={`bb-chara ${a.element} ${a.hp <= 0 ? 'down' : ''} ${battle.selectedAlly === i ? 'sel' : ''} ${a.queuedSkillId ? 'queued' : ''}`}
+              disabled={a.hp <= 0}
               onClick={() => {
-                setAbilOpen(false)
-                act(() => pressAttack(battle))
+                setBattle(selectAlly(battle, i))
+                setShowAbil(true)
               }}
             >
-              攻撃
+              <div className="ch-portrait">
+                <span className="ch-face" />
+                {a.charge >= CHARGE_MAX && <i className="ougi">奥義</i>}
+              </div>
+              <div className="ch-hp">
+                <div style={{ width: `${(a.hp / a.maxHp) * 100}%` }} />
+              </div>
+              <div className="ch-charge">
+                <div style={{ width: `${a.charge}%` }} />
+              </div>
+              <span className="ch-name">{a.name}</span>
             </button>
+          ))}
 
-            <button type="button" className="cmd abil" onClick={() => setAbilOpen((v) => !v)}>
-              アビリティ
+          {battle.phase === 'command' && (
+            <div className="bb-cmd">
+              <button type="button" className="bb-btn abil" onClick={() => setShowAbil((v) => !v)}>
+                アビリティ
+              </button>
+              <button
+                type="button"
+                className="bb-btn attack"
+                onClick={() => {
+                  setShowAbil(false)
+                  act(() => pressAttack(battle))
+                }}
+              >
+                攻撃
+              </button>
+            </div>
+          )}
+        </div>
+
+        {battle.phase === 'enemy' && <div className="bb-phase">Enemy Turn</div>}
+
+        {(battle.phase === 'won' || battle.phase === 'lost') && (
+          <div className="bb-result">
+            <h2>{battle.phase === 'won' ? 'QUEST CLEAR' : 'DEFEAT'}</h2>
+            {battle.phase === 'won' && (
+              <p>
+                ◎{quest.rewards.rupies}　◆{quest.rewards.crystals}　EXP {quest.rewards.exp}
+              </p>
+            )}
+            <button type="button" className="btn primary" onClick={() => navigate('/quests')}>
+              OK
             </button>
           </div>
-        </section>
-      )}
+        )}
+      </div>
 
-      {battle.phase === 'enemy' && <p className="phase-msg">敵の行動…</p>}
-
-      {(battle.phase === 'won' || battle.phase === 'lost') && (
-        <section className="result">
-          <h2>{battle.phase === 'won' ? 'CLEAR' : 'DEFEAT'}</h2>
-          {battle.phase === 'won' && (
-            <p>
-              ◎{quest.rewards.rupies}　◆{quest.rewards.crystals}　EXP {quest.rewards.exp}
-            </p>
-          )}
-          <button type="button" className="btn primary" onClick={() => navigate('/quests')}>
-            クエストへ
-          </button>
-        </section>
-      )}
-
-      <section className="btl-log">
-        {[...battle.logs].reverse().slice(0, 8).map((l) => (
-          <div key={l.id} className={`log-${l.kind}`}>
+      <div className="bb-log">
+        {[...battle.logs].reverse().slice(0, 6).map((l) => (
+          <div key={l.id} className={`l-${l.kind}`}>
             {l.text}
           </div>
         ))}
-      </section>
+      </div>
     </div>
   )
 }

@@ -35,84 +35,63 @@ export function LoginPage() {
     try {
       await guest()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'ゲスト開始に失敗しました')
+      setError(err instanceof Error ? err.message : '開始に失敗しました')
     } finally {
       setBusy(false)
     }
   }
 
   return (
-    <div className="login-page">
-      <div className="sky-layer" aria-hidden>
-        <div className="sun" />
-        <div className="island island-a" />
-        <div className="island island-b" />
-        <div className="airship" />
-        <div className="cloud c1" />
-        <div className="cloud c2" />
-        <div className="cloud c3" />
+    <div className="title-screen">
+      <div className="ts-world" aria-hidden>
+        <div className="ts-sky" />
+        <div className="ts-sun" />
+        <div className="ts-island a" />
+        <div className="ts-island b" />
+        <div className="ts-ship" />
       </div>
 
-      <div className="login-hero">
-        <h1 className="login-brand">蒼穹ファンタジア</h1>
-        <p className="login-tagline">空の彼方へ、仲間と共に挑むターン制RPG</p>
-        <div className="login-cta-row">
-          <button type="button" className="btn primary" disabled={busy} onClick={onGuest}>
-            ゲストではじめる
-          </button>
-          <button
-            type="button"
-            className="btn secondary"
-            disabled={busy}
-            onClick={() => setShowAuth((v) => !v)}
-          >
-            アカウント
-          </button>
-        </div>
-        {error && !showAuth && <p className="error hero-error">{error}</p>}
+      <div className="ts-logo">
+        <p className="ts-sub">GRANBLUE-LIKE SKY RPG</p>
+        <h1>蒼穹ファンタジア</h1>
+        <p className="ts-tag">空の彼方へ、戦いの旅が始まる</p>
+      </div>
+
+      <div className="ts-actions">
+        <button type="button" className="ts-start" disabled={busy} onClick={onGuest}>
+          START
+        </button>
+        <button type="button" className="ts-account" disabled={busy} onClick={() => setShowAuth((v) => !v)}>
+          アカウント連携
+        </button>
+        {error && !showAuth && <p className="ts-error">{error}</p>}
       </div>
 
       {showAuth && (
-        <section className="login-panel panel">
-          <div className="mode-tabs">
-            <button
-              type="button"
-              className={mode === 'login' ? 'active' : ''}
-              onClick={() => setMode('login')}
-            >
+        <section className="ts-panel">
+          <div className="ts-tabs">
+            <button type="button" className={mode === 'login' ? 'on' : ''} onClick={() => setMode('login')}>
               ログイン
             </button>
             <button
               type="button"
-              className={mode === 'register' ? 'active' : ''}
+              className={mode === 'register' ? 'on' : ''}
               onClick={() => setMode('register')}
             >
               新規登録
             </button>
           </div>
-
-          {!firebaseReady && (
-            <p className="hint">
-              Firebase 未設定のためアカウント機能はデモです。ゲストプレイはローカルに保存されます。
-            </p>
-          )}
-
-          <form onSubmit={onSubmit} className="login-form">
+          {!firebaseReady && <p className="ts-hint">Firebase未設定のためゲスト推奨</p>}
+          <form onSubmit={onSubmit} className="ts-form">
             {mode === 'register' && (
               <label>
                 騎空士名
-                <input value={name} onChange={(e) => setName(e.target.value)} placeholder="ライラ" />
+                <input value={name} onChange={(e) => setName(e.target.value)} />
               </label>
             )}
             <label>
               メール
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required={firebaseReady}
-                placeholder="you@example.com"
-              />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required={firebaseReady} />
             </label>
             <label>
               パスワード
@@ -122,12 +101,11 @@ export function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required={firebaseReady}
                 minLength={6}
-                placeholder="6文字以上"
               />
             </label>
-            {error && <p className="error">{error}</p>}
+            {error && <p className="ts-error">{error}</p>}
             <button type="submit" className="btn azure" disabled={busy || !firebaseReady}>
-              {mode === 'login' ? 'ログイン' : 'アカウント作成'}
+              {mode === 'login' ? 'ログイン' : '登録'}
             </button>
           </form>
         </section>
